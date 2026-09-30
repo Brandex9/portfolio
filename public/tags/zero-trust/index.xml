@@ -16,6 +16,13 @@
       <description>Design and deployment of an enterprise 6-VLAN network topology utilizing virtualized OPNsense, Zenarmor DPI, and default-deny inter-VLAN filtering.</description>
     </item>
     <item>
+      <title>Hybrid Cloud Perimeter: VPS Reverse-Proxy Shield &amp; Zero-Trust ZTNA</title>
+      <link>http://localhost:1313/projects/hybrid-cloud-edge-defense/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/hybrid-cloud-edge-defense/</guid>
+      <description>Architecting an obfuscated edge perimeter using a stateless OVHcloud VPS, Caddy Layer 4 filtering, MaxMind GeoIP gating, and a kernel-level WireGuard transit pipe.</description>
+    </item>
+    <item>
       <title>Enterprise Multi-VLAN Network &amp; Microsegmented Lab Architecture</title>
       <link>http://localhost:1313/posts/homelab-architecture/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Wireshark on Brandon Extra | Security &amp; Systems Architecture</title>
+    <link>http://localhost:1313/tags/wireshark/</link>
+    <description>Recent content in Wireshark on Brandon Extra | Security &amp; Systems Architecture</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/wireshark/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>NOC/SOC Defense: Packet Analysis, Threat Bouncing, and SIEM Telemetry</title>
+      <link>http://localhost:1313/projects/soc-telemetry-packet-analysis/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/soc-telemetry-packet-analysis/</guid>
+      <description>Implementing a hybrid CrowdSec IPS and log analysis pipeline across edge proxies and hypervisors to detect, analyze, and drop malicious traffic flows.</description>
+    </item>
+  </channel>
+</rss>

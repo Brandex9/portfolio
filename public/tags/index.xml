@@ -16,6 +16,27 @@
       <description></description>
     </item>
     <item>
+      <title>Caddy</title>
+      <link>http://localhost:1313/tags/caddy/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/caddy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloudflare</title>
+      <link>http://localhost:1313/tags/cloudflare/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/cloudflare/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CrowdSec</title>
+      <link>http://localhost:1313/tags/crowdsec/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/crowdsec/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>DevOps</title>
       <link>http://localhost:1313/tags/devops/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
@@ -34,6 +55,13 @@
       <link>http://localhost:1313/tags/docker/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DPI</title>
+      <link>http://localhost:1313/tags/dpi/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/dpi/</guid>
       <description></description>
     </item>
     <item>
@@ -72,10 +100,52 @@
       <description></description>
     </item>
     <item>
+      <title>Security</title>
+      <link>http://localhost:1313/tags/security/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/security/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SIEM</title>
+      <link>http://localhost:1313/tags/siem/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/siem/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Splunk</title>
+      <link>http://localhost:1313/tags/splunk/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/splunk/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TCPDump</title>
+      <link>http://localhost:1313/tags/tcpdump/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/tcpdump/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>VLANs</title>
       <link>http://localhost:1313/tags/vlans/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/vlans/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>WireGuard</title>
+      <link>http://localhost:1313/tags/wireguard/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/wireguard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wireshark</title>
+      <link>http://localhost:1313/tags/wireshark/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/wireshark/</guid>
       <description></description>
     </item>
     <item>
@@ -90,6 +160,13 @@
       <link>http://localhost:1313/tags/zero-trust/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/zero-trust/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ZTNA</title>
+      <link>http://localhost:1313/tags/ztna/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/ztna/</guid>
       <description></description>
     </item>
   </channel>

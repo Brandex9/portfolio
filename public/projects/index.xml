@@ -22,5 +22,19 @@
       <guid>http://localhost:1313/projects/tier2-disaster-recovery/</guid>
       <description>Zero-plaintext container deployments paired with a two-tier backup pipeline utilizing local block snapshots and client-side encrypted Backblaze B2 offsite syncs.</description>
     </item>
+    <item>
+      <title>Hybrid Cloud Perimeter: VPS Reverse-Proxy Shield &amp; Zero-Trust ZTNA</title>
+      <link>http://localhost:1313/projects/hybrid-cloud-edge-defense/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/hybrid-cloud-edge-defense/</guid>
+      <description>Architecting an obfuscated edge perimeter using a stateless OVHcloud VPS, Caddy Layer 4 filtering, MaxMind GeoIP gating, and a kernel-level WireGuard transit pipe.</description>
+    </item>
+    <item>
+      <title>NOC/SOC Defense: Packet Analysis, Threat Bouncing, and SIEM Telemetry</title>
+      <link>http://localhost:1313/projects/soc-telemetry-packet-analysis/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/soc-telemetry-packet-analysis/</guid>
+      <description>Implementing a hybrid CrowdSec IPS and log analysis pipeline across edge proxies and hypervisors to detect, analyze, and drop malicious traffic flows.</description>
+    </item>
   </channel>
 </rss>

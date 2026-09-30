@@ -19,15 +19,18 @@ params:
     enabled: true
     title: "Brandon Extra"
     subtitle: "Network Security Specialist • Aspiring NOC Analyst • Systems Architect"
-    imageUrl: "/assets/50559624.jpg"
-    imageWidth: 140
-    imageHeight: 140
+    imageUrl: "50559624.jpg"
+    imageTitle: "Brandon Extra"
+    imageWidth: 150
+    imageHeight: 150
     buttons:
-      - name: "Enterprise Homelab Architecture"
-        url: "/posts/homelab-architecture/"
-      - name: "Projects & Lab Work"
-        url: "/projects/"
-      - name: "Resume"
+      - name: "Network & VLAN Architecture"
+        url: "/projects/enterprise-vlan-segmentation/"
+      - name: "Hybrid Cloud & Edge Security"
+        url: "/projects/hybrid-cloud-edge-defense/"
+      - name: "NOC Telemetry & Packet Analysis"
+        url: "/projects/soc-telemetry-packet-analysis/"
+      - name: "Full Technical Resume"
         url: "/resume/"
 
   # Social / Professional Links
