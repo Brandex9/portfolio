@@ -10,9 +10,14 @@ params:
   author: "Brandon Extra"
   defaultTheme: dark
   disableThemeToggle: false
-  ShowShareButtons: false
   ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
   ShowCodeCopyButtons: true
+  ShowWordCount: false
+  ShowRssButtonInSectionTermList: true
+  comments: false
 
   # Home Page Profile Mode
   profileMode:

@@ -15,5 +15,12 @@
       <guid>http://localhost:1313/posts/homelab-architecture/</guid>
       <description>A production-grade homelab architecture implementing a 6-VLAN network schema, virtualized OPNsense Layer 7 inspection, and hardened storage fabrics.</description>
     </item>
+    <item>
+      <title>Practical Incident Triage: Analyzing Malicious Vectors and Phishing Indicators</title>
+      <link>http://localhost:1313/posts/phishing-triage-indicators/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/phishing-triage-indicators/</guid>
+      <description>An operational guide to analyzing weaponized email lures, header anomalies, obfuscated payloads, and building enterprise user awareness frameworks.</description>
+    </item>
   </channel>
 </rss>
