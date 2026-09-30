@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Enterprise Multi-VLAN Network &amp; Microsegmented Lab Architecture | Brandon Extra | Security &amp; Systems Architecture</title>
+<meta name="keywords" content="Networking, OPNsense, Proxmox, VLANs, Zero-Trust">
+<meta name="description" content="A production-grade homelab architecture implementing a 6-VLAN network schema, virtualized OPNsense Layer 7 inspection, and hardened storage fabrics.">
+<meta name="author" content="Brandon Extra">
+<link rel="canonical" href="http://localhost:1313/posts/homelab-architecture/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/homelab-architecture/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="http://localhost:1313/posts/homelab-architecture/">
+  <meta property="og:site_name" content="Brandon Extra | Security & Systems Architecture">
+  <meta property="og:title" content="Enterprise Multi-VLAN Network & Microsegmented Lab Architecture">
+  <meta property="og:description" content="A production-grade homelab architecture implementing a 6-VLAN network schema, virtualized OPNsense Layer 7 inspection, and hardened storage fabrics.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-09-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-09-30T00:00:00+00:00">
+    <meta property="article:tag" content="Networking">
+    <meta property="article:tag" content="OPNsense">
+    <meta property="article:tag" content="Proxmox">
+    <meta property="article:tag" content="VLANs">
+    <meta property="article:tag" content="Zero-Trust">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Enterprise Multi-VLAN Network & Microsegmented Lab Architecture">
+  <meta name="twitter:description" content="A production-grade homelab architecture implementing a 6-VLAN network schema, virtualized OPNsense Layer 7 inspection, and hardened storage fabrics.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Enterprise Multi-VLAN Network \u0026 Microsegmented Lab Architecture",
+      "item": "http://localhost:1313/posts/homelab-architecture/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Enterprise Multi-VLAN Network \u0026 Microsegmented Lab Architecture",
+  "name": "Enterprise Multi-VLAN Network \u0026 Microsegmented Lab Architecture",
+  "description": "A production-grade homelab architecture implementing a 6-VLAN network schema, virtualized OPNsense Layer 7 inspection, and hardened storage fabrics.",
+  "keywords": [
+    "Networking", "OPNsense", "Proxmox", "VLANs", "Zero-Trust"
+  ],
+  "articleBody": "Architectural Overview Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel i3-N300 OPNsense core router and a TP-Link Omada 2.5G managed switch.\nKey Implementation Highlights 6-VLAN Microsegmentation: Strict inter-VLAN default-deny boundary isolation across Trusted LAN, Out-of-Band Management (OOB_MGMT), Application Core, DMZ Media, IoT Smart, and an isolated Security Staging sandbox. Compute \u0026 Storage Fabric: Bare-metal Proxmox VE hypervisors hosting virtualized Unraid storage (direct PCIe pass-through of LSI SAS 9211-8i in IT Mode) alongside containerized workloads. GitOps Application Orchestration: Zero plaintext credential storage using Docker Named Secrets (/run/secrets/) and Wolfi-hardened container runtimes. Disaster Recovery Strategy: Multi-tier DR pipeline combining local block-level Proxmox Backup Server (PBS) SSD mirrors with client-side encrypted, deduplicated Kopia snapshots shipped to Backblaze B2. ",
+  "wordCount" : "125",
+  "inLanguage": "en",
+  "datePublished": "2026-09-30T00:00:00Z",
+  "dateModified": "2026-09-30T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Brandon Extra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/homelab-architecture/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brandon Extra | Security \u0026 Systems Architecture",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Brandon Extra | Security &amp; Systems Architecture (Alt + H)">Brandon Extra | Security &amp; Systems Architecture</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Enterprise Multi-VLAN Network &amp; Microsegmented Lab Architecture
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-09-30 00:00:00 +0000 UTC'>September 30, 2026</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Brandon Extra</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="architectural-overview">Architectural Overview<a hidden class="anchor" aria-hidden="true" href="#architectural-overview">#</a></h2>
+<p>Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel i3-N300 OPNsense core router and a TP-Link Omada 2.5G managed switch.</p>
+<h3 id="key-implementation-highlights">Key Implementation Highlights<a hidden class="anchor" aria-hidden="true" href="#key-implementation-highlights">#</a></h3>
+<ul>
+<li><strong>6-VLAN Microsegmentation:</strong> Strict inter-VLAN default-deny boundary isolation across Trusted LAN, Out-of-Band Management (OOB_MGMT), Application Core, DMZ Media, IoT Smart, and an isolated Security Staging sandbox.</li>
+<li><strong>Compute &amp; Storage Fabric:</strong> Bare-metal Proxmox VE hypervisors hosting virtualized Unraid storage (direct PCIe pass-through of LSI SAS 9211-8i in IT Mode) alongside containerized workloads.</li>
+<li><strong>GitOps Application Orchestration:</strong> Zero plaintext credential storage using Docker Named Secrets (<code>/run/secrets/</code>) and Wolfi-hardened container runtimes.</li>
+<li><strong>Disaster Recovery Strategy:</strong> Multi-tier DR pipeline combining local block-level Proxmox Backup Server (PBS) SSD mirrors with client-side encrypted, deduplicated Kopia snapshots shipped to Backblaze B2.</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/networking/">Networking</a></li>
+      <li><a href="http://localhost:1313/tags/opnsense/">OPNsense</a></li>
+      <li><a href="http://localhost:1313/tags/proxmox/">Proxmox</a></li>
+      <li><a href="http://localhost:1313/tags/vlans/">VLANs</a></li>
+      <li><a href="http://localhost:1313/tags/zero-trust/">Zero-Trust</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">Brandon Extra | Security &amp; Systems Architecture</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

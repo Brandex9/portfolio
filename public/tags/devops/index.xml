@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>DevOps on Brandon Extra | Security &amp; Systems Architecture</title>
+    <link>http://localhost:1313/tags/devops/</link>
+    <description>Recent content in DevOps on Brandon Extra | Security &amp; Systems Architecture</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Two-Tier Disaster Recovery &amp; Hardened Container Orchestration</title>
+      <link>http://localhost:1313/projects/tier2-disaster-recovery/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/tier2-disaster-recovery/</guid>
+      <description>Zero-plaintext container deployments paired with a two-tier backup pipeline utilizing local block snapshots and client-side encrypted Backblaze B2 offsite syncs.</description>
+    </item>
+  </channel>
+</rss>

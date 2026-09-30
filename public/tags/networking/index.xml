@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Networking on Brandon Extra | Security &amp; Systems Architecture</title>
+    <link>http://localhost:1313/tags/networking/</link>
+    <description>Recent content in Networking on Brandon Extra | Security &amp; Systems Architecture</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Production Multi-VLAN Network Segmentation &amp; Threat Isolation</title>
+      <link>http://localhost:1313/projects/enterprise-vlan-segmentation/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/enterprise-vlan-segmentation/</guid>
+      <description>Design and deployment of an enterprise 6-VLAN network topology utilizing virtualized OPNsense, Zenarmor DPI, and default-deny inter-VLAN filtering.</description>
+    </item>
+    <item>
+      <title>Enterprise Multi-VLAN Network &amp; Microsegmented Lab Architecture</title>
+      <link>http://localhost:1313/posts/homelab-architecture/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/homelab-architecture/</guid>
+      <description>A production-grade homelab architecture implementing a 6-VLAN network schema, virtualized OPNsense Layer 7 inspection, and hardened storage fabrics.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,55 @@
+baseURL: "https://brandonextra.com/"
+title: "Brandon Extra | Security & Systems Architecture"
+theme: "PaperMod"
+languageCode: "en-us"
+
+params:
+  env: production
+  title: "Brandon Extra"
+  description: "Network Security Specialist & Aspiring NOC Analyst"
+  author: "Brandon Extra"
+  defaultTheme: dark
+  disableThemeToggle: false
+  ShowShareButtons: false
+  ShowReadingTime: true
+  ShowCodeCopyButtons: true
+
+  # Home Page Profile Mode
+  profileMode:
+    enabled: true
+    title: "Brandon Extra"
+    subtitle: "Network Security Specialist • Aspiring NOC Analyst • Systems Architect"
+    imageUrl: "/assets/50559624.jpg"
+    imageWidth: 140
+    imageHeight: 140
+    buttons:
+      - name: "Enterprise Homelab Architecture"
+        url: "/posts/homelab-architecture/"
+      - name: "Projects & Lab Work"
+        url: "/projects/"
+      - name: "Resume"
+        url: "/resume/"
+
+  # Social / Professional Links
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/Brandex9"
+    - name: "linkedin"
+      url: "https://linkedin.com/in/extrab9"
+    - name: "email"
+      url: "mailto:brandex@brandonextra.com"
+
+menu:
+  main:
+    - identifier: posts
+      name: Writeups
+      url: /posts/
+      weight: 10
+    - identifier: projects
+      name: Projects
+      url: /projects/
+      weight: 20
+    - identifier: resume
+      name: Resume
+      url: /resume/
+      weight: 30

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Brandon Extra | Security &amp; Systems Architecture</title>
+<meta name="keywords" content="">
+<meta name="description" content="Brandon Extra
+Avenel, NJ | 732-207-2933 | brandex@brandonextra.com | LinkedIn | portfolio website
+PROFESSIONAL SUMMARY
+Certified IT &amp; Network Security Specialist blending 9&#43; years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations.
+CERTIFICATIONS &amp; TECHNICAL PROFILE
+Active Certifications: CompTIA A&#43; | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate
+Active Pursuits: CompTIA Security&#43; | Cisco Certified Network Associate (CCNA) | AWS Certified Solutions Architect – Associate
+Code Literacy &amp; Scripting: Proficient at reading, auditing, and parsing code syntax in Python, JavaScript, PowerShell, and Bash to trace database query errors, debug deployment configuration loops, and audit application log files.
+Remote Access &amp; Zero Trust: Hybrid VPN Mesh Architectures, Zero Trust Network Access (ZTNA) Deployment (Twingate), Peer-to-Peer Mesh Overlays (Tailscale), Split-Tunnel Optimization, Least-Privilege Application Micro-Segmentation.
+Cloud &amp; Perimeter Security: Hybrid Cloud Architecture, VPS Deployment (OVHcloud), Secure Tunneling (WireGuard), Cloudflare DNS-01 ACME Automation, MaxMind GeoIP Edge Whitelisting, Authelia Access Gateways, Fail2ban Perimeter Protection.
+Networking &amp; Security: OPNsense Enterprise Firewall Administration, 802.1Q VLAN Segmentation, Wireshark Packet Analysis, CrowdSec Hybrid IPS, Splunk SIEM Monitoring, TCPDump, DNSSEC, Oblivious DoH (ODoH) Mapping, Inter-LAN DNS-over-TLS (DoT).
+Virtualization &amp; Datastores: Proxmox VE (Cluster Quorum &amp; High Availability), Docker &amp; Docker Compose Containerization, Dockhand, Unraid NAS Data Systems, Linux OS Management (Ubuntu/Debian Server), Proxmox Backup Server (PBS).
+TECHNICAL INFRASTRUCTURE PROJECTS
+Hybrid Cloud Security &amp; Multi-Node Cluster Simulation Lab | Technical Architect
+Engineered a dual-layered remote access architecture pairing a Tailscale Mesh VPN overlay for core hypervisor data-plane orchestration with a Twingate Zero Trust Network Access (ZTNA) gateway to enforce strict application-level micro-segmentation.
+Integrated the ZTNA perimeter with a centralized Authentik identity provider via OIDC (OpenID Connect), mandating biometric hardware security keys and multi-factor authentication before tunneling remote client sessions.
+Designed an obfuscated network edge architecture using an OVHcloud VPS reverse proxy shield, enabling public application accessibility while keeping 100% of inbound WAN ports securely closed on the residential perimeter.
+Established a high-throughput, kernel-level WireGuard data tunnel bridging the cloud VPS to a home network infrastructure core, bypassing traditional user-space performance overhead to achieve seamless 4K media streaming routing.
+Deployed a hybrid CrowdSec Intrusion Prevention System (IPS) across both the cloud proxy and home gateway node; configured real-time Local API logs to block malicious IP vectors at the cloud edge before they cross the home network boundary.
+Hardened the public-facing cloud perimeter by compiling Caddy Server with Layer4 extensions to ingest raw TCP/UDP packets, integrating a MaxMind GeoIP database for geometric whitelisting, and layering an Authelia gateway for administrative authentication.
+Engineered a 3-node high-availability (HA) Proxmox VE hypervisor cluster incorporating an isolated firewall core (Intel N300), a high-density compute/storage node (Ryzen 5), and an ARM64-based resilience voting quorum node (Raspberry Pi).
+Configured a virtualized OPNsense firewall architecture serving as the home core, integrating Zenarmor Layer 7 Deep Packet Inspection and a decoupled, privacy-hardened Oblivious DoH (ODoH) / DNS-over-QUIC (DoQ) model to strip ISP tracking footprints.
+Implemented strict 802.1Q VLAN segmentation across physical managed switches to dynamically isolate corporate assets, insecure smart IoT devices, and guest traffic, minimizing the internal horizontal attack surface.
+Deployed a fault-tolerant Unraid storage array passing through native LSI HBA / SATA storage controllers, backed by an incremental, block-level Proxmox Backup Server (PBS) routine to safeguard core infrastructure snapshots.
+Programmed an automated data center infrastructure Network UPS Tools (NUT) master-slave loop wired to a smart UPS to monitor real-time voltage thresholds and initiate graceful, safe database shutdowns during power grid failure events.
+PROFESSIONAL EXPERIENCE
+AMAZON | October 2016 – December 2025
+Dispatch Manager | April 2020 – December 2025
+Directed daily logistics operations, dispatching 25&#43; delivery vans and trucks under strict, time-critical 30-minute launch windows.
+Functioned as the Central Point of Contact for real-time incident response, coordinating rapid communication across drivers and base teams to resolve hardware, vehicle, and routing disruptions.
+Handled ticket escalation and operational troubleshooting under strict SLAs, utilizing diagnostic data logs to run root-cause analysis on field failures.
+Generates comprehensive technical documentation and workflow templates to standardize driver tracking procedures and response metrics.
+Analyzed daily route telemetry and delivery metrics to identify mechanical and software bottlenecks, implementing continuous performance changes to improve driver efficiency and delivery accuracy.
+Quality Assurance Specialist | August 2019 – March 2020
+Traveled across the tri-state area to business partners and residential hubs to monitor fulfillment flows and ensure corporate quality compliance standards were met.
+Investigated and resolved systemic delivery failures by gathering on-site field performance data and generating formal incident reports for regional logistics coordinators to enact operational corrections.
+Ambassador | January 2018 – August 2019
+Served as a technical and workflow liaison between shift management teams and floor associates, ensuring proper knowledge transfers and training compliance.
+Spearheaded high-volume inventory flow initiatives requiring strict adherence to standard operating procedures (SOPs) and corporate technical guidelines.
+Managed the physical tracking and onboarding of cargo trailers, monitoring pallet layouts and package counts to meet high-volume operational targets.
+EDUCATION NEW JERSEY INSTITUTE OF TECHNOLOGY | Newark, NJ
+Professional Certificate in Software Development
+Core Technical Coursework: SQL &amp; Data Modeling | Principles of Programming with Python | MERN Stack System Architecture | React &amp; Redux Infrastructure | JavaScript Front-End Web Engineering">
+<meta name="author" content="Brandon Extra">
+<link rel="canonical" href="http://localhost:1313/resume/resume/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/resume/resume/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="http://localhost:1313/resume/resume/">
+  <meta property="og:site_name" content="Brandon Extra | Security & Systems Architecture">
+  <meta property="og:title" content="Brandon Extra | Security & Systems Architecture">
+  <meta property="og:description" content="Brandon Extra Avenel, NJ | 732-207-2933 | brandex@brandonextra.com | LinkedIn | portfolio website PROFESSIONAL SUMMARY Certified IT &amp; Network Security Specialist blending 9&#43; years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations. CERTIFICATIONS &amp; TECHNICAL PROFILE Active Certifications: CompTIA A&#43; | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate Active Pursuits: CompTIA Security&#43; | Cisco Certified Network Associate (CCNA) | AWS Certified Solutions Architect – Associate Code Literacy &amp; Scripting: Proficient at reading, auditing, and parsing code syntax in Python, JavaScript, PowerShell, and Bash to trace database query errors, debug deployment configuration loops, and audit application log files. Remote Access &amp; Zero Trust: Hybrid VPN Mesh Architectures, Zero Trust Network Access (ZTNA) Deployment (Twingate), Peer-to-Peer Mesh Overlays (Tailscale), Split-Tunnel Optimization, Least-Privilege Application Micro-Segmentation. Cloud &amp; Perimeter Security: Hybrid Cloud Architecture, VPS Deployment (OVHcloud), Secure Tunneling (WireGuard), Cloudflare DNS-01 ACME Automation, MaxMind GeoIP Edge Whitelisting, Authelia Access Gateways, Fail2ban Perimeter Protection. Networking &amp; Security: OPNsense Enterprise Firewall Administration, 802.1Q VLAN Segmentation, Wireshark Packet Analysis, CrowdSec Hybrid IPS, Splunk SIEM Monitoring, TCPDump, DNSSEC, Oblivious DoH (ODoH) Mapping, Inter-LAN DNS-over-TLS (DoT). Virtualization &amp; Datastores: Proxmox VE (Cluster Quorum &amp; High Availability), Docker &amp; Docker Compose Containerization, Dockhand, Unraid NAS Data Systems, Linux OS Management (Ubuntu/Debian Server), Proxmox Backup Server (PBS). TECHNICAL INFRASTRUCTURE PROJECTS Hybrid Cloud Security &amp; Multi-Node Cluster Simulation Lab | Technical Architect Engineered a dual-layered remote access architecture pairing a Tailscale Mesh VPN overlay for core hypervisor data-plane orchestration with a Twingate Zero Trust Network Access (ZTNA) gateway to enforce strict application-level micro-segmentation. Integrated the ZTNA perimeter with a centralized Authentik identity provider via OIDC (OpenID Connect), mandating biometric hardware security keys and multi-factor authentication before tunneling remote client sessions. Designed an obfuscated network edge architecture using an OVHcloud VPS reverse proxy shield, enabling public application accessibility while keeping 100% of inbound WAN ports securely closed on the residential perimeter. Established a high-throughput, kernel-level WireGuard data tunnel bridging the cloud VPS to a home network infrastructure core, bypassing traditional user-space performance overhead to achieve seamless 4K media streaming routing. Deployed a hybrid CrowdSec Intrusion Prevention System (IPS) across both the cloud proxy and home gateway node; configured real-time Local API logs to block malicious IP vectors at the cloud edge before they cross the home network boundary. Hardened the public-facing cloud perimeter by compiling Caddy Server with Layer4 extensions to ingest raw TCP/UDP packets, integrating a MaxMind GeoIP database for geometric whitelisting, and layering an Authelia gateway for administrative authentication. Engineered a 3-node high-availability (HA) Proxmox VE hypervisor cluster incorporating an isolated firewall core (Intel N300), a high-density compute/storage node (Ryzen 5), and an ARM64-based resilience voting quorum node (Raspberry Pi). Configured a virtualized OPNsense firewall architecture serving as the home core, integrating Zenarmor Layer 7 Deep Packet Inspection and a decoupled, privacy-hardened Oblivious DoH (ODoH) / DNS-over-QUIC (DoQ) model to strip ISP tracking footprints. Implemented strict 802.1Q VLAN segmentation across physical managed switches to dynamically isolate corporate assets, insecure smart IoT devices, and guest traffic, minimizing the internal horizontal attack surface. Deployed a fault-tolerant Unraid storage array passing through native LSI HBA / SATA storage controllers, backed by an incremental, block-level Proxmox Backup Server (PBS) routine to safeguard core infrastructure snapshots. Programmed an automated data center infrastructure Network UPS Tools (NUT) master-slave loop wired to a smart UPS to monitor real-time voltage thresholds and initiate graceful, safe database shutdowns during power grid failure events. PROFESSIONAL EXPERIENCE AMAZON | October 2016 – December 2025 Dispatch Manager | April 2020 – December 2025 Directed daily logistics operations, dispatching 25&#43; delivery vans and trucks under strict, time-critical 30-minute launch windows. Functioned as the Central Point of Contact for real-time incident response, coordinating rapid communication across drivers and base teams to resolve hardware, vehicle, and routing disruptions. Handled ticket escalation and operational troubleshooting under strict SLAs, utilizing diagnostic data logs to run root-cause analysis on field failures. Generates comprehensive technical documentation and workflow templates to standardize driver tracking procedures and response metrics. Analyzed daily route telemetry and delivery metrics to identify mechanical and software bottlenecks, implementing continuous performance changes to improve driver efficiency and delivery accuracy. Quality Assurance Specialist | August 2019 – March 2020 Traveled across the tri-state area to business partners and residential hubs to monitor fulfillment flows and ensure corporate quality compliance standards were met. Investigated and resolved systemic delivery failures by gathering on-site field performance data and generating formal incident reports for regional logistics coordinators to enact operational corrections. Ambassador | January 2018 – August 2019 Served as a technical and workflow liaison between shift management teams and floor associates, ensuring proper knowledge transfers and training compliance. Spearheaded high-volume inventory flow initiatives requiring strict adherence to standard operating procedures (SOPs) and corporate technical guidelines. Managed the physical tracking and onboarding of cargo trailers, monitoring pallet layouts and package counts to meet high-volume operational targets. EDUCATION NEW JERSEY INSTITUTE OF TECHNOLOGY | Newark, NJ Professional Certificate in Software Development Core Technical Coursework: SQL &amp; Data Modeling | Principles of Programming with Python | MERN Stack System Architecture | React &amp; Redux Infrastructure | JavaScript Front-End Web Engineering">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="resume">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Brandon Extra | Security & Systems Architecture">
+  <meta name="twitter:description" content="Brandon Extra Avenel, NJ | 732-207-2933 | brandex@brandonextra.com | LinkedIn | portfolio website PROFESSIONAL SUMMARY Certified IT &amp; Network Security Specialist blending 9&#43; years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations. CERTIFICATIONS &amp; TECHNICAL PROFILE Active Certifications: CompTIA A&#43; | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate Active Pursuits: CompTIA Security&#43; | Cisco Certified Network Associate (CCNA) | AWS Certified Solutions Architect – Associate Code Literacy &amp; Scripting: Proficient at reading, auditing, and parsing code syntax in Python, JavaScript, PowerShell, and Bash to trace database query errors, debug deployment configuration loops, and audit application log files. Remote Access &amp; Zero Trust: Hybrid VPN Mesh Architectures, Zero Trust Network Access (ZTNA) Deployment (Twingate), Peer-to-Peer Mesh Overlays (Tailscale), Split-Tunnel Optimization, Least-Privilege Application Micro-Segmentation. Cloud &amp; Perimeter Security: Hybrid Cloud Architecture, VPS Deployment (OVHcloud), Secure Tunneling (WireGuard), Cloudflare DNS-01 ACME Automation, MaxMind GeoIP Edge Whitelisting, Authelia Access Gateways, Fail2ban Perimeter Protection. Networking &amp; Security: OPNsense Enterprise Firewall Administration, 802.1Q VLAN Segmentation, Wireshark Packet Analysis, CrowdSec Hybrid IPS, Splunk SIEM Monitoring, TCPDump, DNSSEC, Oblivious DoH (ODoH) Mapping, Inter-LAN DNS-over-TLS (DoT). Virtualization &amp; Datastores: Proxmox VE (Cluster Quorum &amp; High Availability), Docker &amp; Docker Compose Containerization, Dockhand, Unraid NAS Data Systems, Linux OS Management (Ubuntu/Debian Server), Proxmox Backup Server (PBS). TECHNICAL INFRASTRUCTURE PROJECTS Hybrid Cloud Security &amp; Multi-Node Cluster Simulation Lab | Technical Architect Engineered a dual-layered remote access architecture pairing a Tailscale Mesh VPN overlay for core hypervisor data-plane orchestration with a Twingate Zero Trust Network Access (ZTNA) gateway to enforce strict application-level micro-segmentation. Integrated the ZTNA perimeter with a centralized Authentik identity provider via OIDC (OpenID Connect), mandating biometric hardware security keys and multi-factor authentication before tunneling remote client sessions. Designed an obfuscated network edge architecture using an OVHcloud VPS reverse proxy shield, enabling public application accessibility while keeping 100% of inbound WAN ports securely closed on the residential perimeter. Established a high-throughput, kernel-level WireGuard data tunnel bridging the cloud VPS to a home network infrastructure core, bypassing traditional user-space performance overhead to achieve seamless 4K media streaming routing. Deployed a hybrid CrowdSec Intrusion Prevention System (IPS) across both the cloud proxy and home gateway node; configured real-time Local API logs to block malicious IP vectors at the cloud edge before they cross the home network boundary. Hardened the public-facing cloud perimeter by compiling Caddy Server with Layer4 extensions to ingest raw TCP/UDP packets, integrating a MaxMind GeoIP database for geometric whitelisting, and layering an Authelia gateway for administrative authentication. Engineered a 3-node high-availability (HA) Proxmox VE hypervisor cluster incorporating an isolated firewall core (Intel N300), a high-density compute/storage node (Ryzen 5), and an ARM64-based resilience voting quorum node (Raspberry Pi). Configured a virtualized OPNsense firewall architecture serving as the home core, integrating Zenarmor Layer 7 Deep Packet Inspection and a decoupled, privacy-hardened Oblivious DoH (ODoH) / DNS-over-QUIC (DoQ) model to strip ISP tracking footprints. Implemented strict 802.1Q VLAN segmentation across physical managed switches to dynamically isolate corporate assets, insecure smart IoT devices, and guest traffic, minimizing the internal horizontal attack surface. Deployed a fault-tolerant Unraid storage array passing through native LSI HBA / SATA storage controllers, backed by an incremental, block-level Proxmox Backup Server (PBS) routine to safeguard core infrastructure snapshots. Programmed an automated data center infrastructure Network UPS Tools (NUT) master-slave loop wired to a smart UPS to monitor real-time voltage thresholds and initiate graceful, safe database shutdowns during power grid failure events. PROFESSIONAL EXPERIENCE AMAZON | October 2016 – December 2025 Dispatch Manager | April 2020 – December 2025 Directed daily logistics operations, dispatching 25&#43; delivery vans and trucks under strict, time-critical 30-minute launch windows. Functioned as the Central Point of Contact for real-time incident response, coordinating rapid communication across drivers and base teams to resolve hardware, vehicle, and routing disruptions. Handled ticket escalation and operational troubleshooting under strict SLAs, utilizing diagnostic data logs to run root-cause analysis on field failures. Generates comprehensive technical documentation and workflow templates to standardize driver tracking procedures and response metrics. Analyzed daily route telemetry and delivery metrics to identify mechanical and software bottlenecks, implementing continuous performance changes to improve driver efficiency and delivery accuracy. Quality Assurance Specialist | August 2019 – March 2020 Traveled across the tri-state area to business partners and residential hubs to monitor fulfillment flows and ensure corporate quality compliance standards were met. Investigated and resolved systemic delivery failures by gathering on-site field performance data and generating formal incident reports for regional logistics coordinators to enact operational corrections. Ambassador | January 2018 – August 2019 Served as a technical and workflow liaison between shift management teams and floor associates, ensuring proper knowledge transfers and training compliance. Spearheaded high-volume inventory flow initiatives requiring strict adherence to standard operating procedures (SOPs) and corporate technical guidelines. Managed the physical tracking and onboarding of cargo trailers, monitoring pallet layouts and package counts to meet high-volume operational targets. EDUCATION NEW JERSEY INSTITUTE OF TECHNOLOGY | Newark, NJ Professional Certificate in Software Development Core Technical Coursework: SQL &amp; Data Modeling | Principles of Programming with Python | MERN Stack System Architecture | React &amp; Redux Infrastructure | JavaScript Front-End Web Engineering">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Resumes",
+      "item": "http://localhost:1313/resume/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "",
+      "item": "http://localhost:1313/resume/resume/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "name": "",
+  "description": "Brandon Extra Avenel, NJ | 732-207-2933 | brandex@brandonextra.com | LinkedIn | portfolio website PROFESSIONAL SUMMARY Certified IT \u0026amp; Network Security Specialist blending 9+ years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations. CERTIFICATIONS \u0026amp; TECHNICAL PROFILE Active Certifications: CompTIA A+ | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate Active Pursuits: CompTIA Security+ | Cisco Certified Network Associate (CCNA) | AWS Certified Solutions Architect – Associate Code Literacy \u0026amp; Scripting: Proficient at reading, auditing, and parsing code syntax in Python, JavaScript, PowerShell, and Bash to trace database query errors, debug deployment configuration loops, and audit application log files. Remote Access \u0026amp; Zero Trust: Hybrid VPN Mesh Architectures, Zero Trust Network Access (ZTNA) Deployment (Twingate), Peer-to-Peer Mesh Overlays (Tailscale), Split-Tunnel Optimization, Least-Privilege Application Micro-Segmentation. Cloud \u0026amp; Perimeter Security: Hybrid Cloud Architecture, VPS Deployment (OVHcloud), Secure Tunneling (WireGuard), Cloudflare DNS-01 ACME Automation, MaxMind GeoIP Edge Whitelisting, Authelia Access Gateways, Fail2ban Perimeter Protection. Networking \u0026amp; Security: OPNsense Enterprise Firewall Administration, 802.1Q VLAN Segmentation, Wireshark Packet Analysis, CrowdSec Hybrid IPS, Splunk SIEM Monitoring, TCPDump, DNSSEC, Oblivious DoH (ODoH) Mapping, Inter-LAN DNS-over-TLS (DoT). Virtualization \u0026amp; Datastores: Proxmox VE (Cluster Quorum \u0026amp; High Availability), Docker \u0026amp; Docker Compose Containerization, Dockhand, Unraid NAS Data Systems, Linux OS Management (Ubuntu/Debian Server), Proxmox Backup Server (PBS). TECHNICAL INFRASTRUCTURE PROJECTS Hybrid Cloud Security \u0026amp; Multi-Node Cluster Simulation Lab | Technical Architect Engineered a dual-layered remote access architecture pairing a Tailscale Mesh VPN overlay for core hypervisor data-plane orchestration with a Twingate Zero Trust Network Access (ZTNA) gateway to enforce strict application-level micro-segmentation. Integrated the ZTNA perimeter with a centralized Authentik identity provider via OIDC (OpenID Connect), mandating biometric hardware security keys and multi-factor authentication before tunneling remote client sessions. Designed an obfuscated network edge architecture using an OVHcloud VPS reverse proxy shield, enabling public application accessibility while keeping 100% of inbound WAN ports securely closed on the residential perimeter. Established a high-throughput, kernel-level WireGuard data tunnel bridging the cloud VPS to a home network infrastructure core, bypassing traditional user-space performance overhead to achieve seamless 4K media streaming routing. Deployed a hybrid CrowdSec Intrusion Prevention System (IPS) across both the cloud proxy and home gateway node; configured real-time Local API logs to block malicious IP vectors at the cloud edge before they cross the home network boundary. Hardened the public-facing cloud perimeter by compiling Caddy Server with Layer4 extensions to ingest raw TCP/UDP packets, integrating a MaxMind GeoIP database for geometric whitelisting, and layering an Authelia gateway for administrative authentication. Engineered a 3-node high-availability (HA) Proxmox VE hypervisor cluster incorporating an isolated firewall core (Intel N300), a high-density compute/storage node (Ryzen 5), and an ARM64-based resilience voting quorum node (Raspberry Pi). Configured a virtualized OPNsense firewall architecture serving as the home core, integrating Zenarmor Layer 7 Deep Packet Inspection and a decoupled, privacy-hardened Oblivious DoH (ODoH) / DNS-over-QUIC (DoQ) model to strip ISP tracking footprints. Implemented strict 802.1Q VLAN segmentation across physical managed switches to dynamically isolate corporate assets, insecure smart IoT devices, and guest traffic, minimizing the internal horizontal attack surface. Deployed a fault-tolerant Unraid storage array passing through native LSI HBA / SATA storage controllers, backed by an incremental, block-level Proxmox Backup Server (PBS) routine to safeguard core infrastructure snapshots. Programmed an automated data center infrastructure Network UPS Tools (NUT) master-slave loop wired to a smart UPS to monitor real-time voltage thresholds and initiate graceful, safe database shutdowns during power grid failure events. PROFESSIONAL EXPERIENCE AMAZON | October 2016 – December 2025 Dispatch Manager | April 2020 – December 2025 Directed daily logistics operations, dispatching 25+ delivery vans and trucks under strict, time-critical 30-minute launch windows. Functioned as the Central Point of Contact for real-time incident response, coordinating rapid communication across drivers and base teams to resolve hardware, vehicle, and routing disruptions. Handled ticket escalation and operational troubleshooting under strict SLAs, utilizing diagnostic data logs to run root-cause analysis on field failures. Generates comprehensive technical documentation and workflow templates to standardize driver tracking procedures and response metrics. Analyzed daily route telemetry and delivery metrics to identify mechanical and software bottlenecks, implementing continuous performance changes to improve driver efficiency and delivery accuracy. Quality Assurance Specialist | August 2019 – March 2020 Traveled across the tri-state area to business partners and residential hubs to monitor fulfillment flows and ensure corporate quality compliance standards were met. Investigated and resolved systemic delivery failures by gathering on-site field performance data and generating formal incident reports for regional logistics coordinators to enact operational corrections. Ambassador | January 2018 – August 2019 Served as a technical and workflow liaison between shift management teams and floor associates, ensuring proper knowledge transfers and training compliance. Spearheaded high-volume inventory flow initiatives requiring strict adherence to standard operating procedures (SOPs) and corporate technical guidelines. Managed the physical tracking and onboarding of cargo trailers, monitoring pallet layouts and package counts to meet high-volume operational targets. EDUCATION NEW JERSEY INSTITUTE OF TECHNOLOGY | Newark, NJ Professional Certificate in Software Development Core Technical Coursework: SQL \u0026amp; Data Modeling | Principles of Programming with Python | MERN Stack System Architecture | React \u0026amp; Redux Infrastructure | JavaScript Front-End Web Engineering\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Brandon Extra Avenel, NJ | 732-207-2933 | brandex@brandonextra.com | LinkedIn | portfolio website PROFESSIONAL SUMMARY Certified IT \u0026 Network Security Specialist blending 9+ years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations. CERTIFICATIONS \u0026 TECHNICAL PROFILE Active Certifications: CompTIA A+ | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate Active Pursuits: CompTIA Security+ | Cisco Certified Network Associate (CCNA) | AWS Certified Solutions Architect – Associate Code Literacy \u0026 Scripting: Proficient at reading, auditing, and parsing code syntax in Python, JavaScript, PowerShell, and Bash to trace database query errors, debug deployment configuration loops, and audit application log files. Remote Access \u0026 Zero Trust: Hybrid VPN Mesh Architectures, Zero Trust Network Access (ZTNA) Deployment (Twingate), Peer-to-Peer Mesh Overlays (Tailscale), Split-Tunnel Optimization, Least-Privilege Application Micro-Segmentation. Cloud \u0026 Perimeter Security: Hybrid Cloud Architecture, VPS Deployment (OVHcloud), Secure Tunneling (WireGuard), Cloudflare DNS-01 ACME Automation, MaxMind GeoIP Edge Whitelisting, Authelia Access Gateways, Fail2ban Perimeter Protection. Networking \u0026 Security: OPNsense Enterprise Firewall Administration, 802.1Q VLAN Segmentation, Wireshark Packet Analysis, CrowdSec Hybrid IPS, Splunk SIEM Monitoring, TCPDump, DNSSEC, Oblivious DoH (ODoH) Mapping, Inter-LAN DNS-over-TLS (DoT). Virtualization \u0026 Datastores: Proxmox VE (Cluster Quorum \u0026 High Availability), Docker \u0026 Docker Compose Containerization, Dockhand, Unraid NAS Data Systems, Linux OS Management (Ubuntu/Debian Server), Proxmox Backup Server (PBS). TECHNICAL INFRASTRUCTURE PROJECTS Hybrid Cloud Security \u0026 Multi-Node Cluster Simulation Lab | Technical Architect Engineered a dual-layered remote access architecture pairing a Tailscale Mesh VPN overlay for core hypervisor data-plane orchestration with a Twingate Zero Trust Network Access (ZTNA) gateway to enforce strict application-level micro-segmentation. Integrated the ZTNA perimeter with a centralized Authentik identity provider via OIDC (OpenID Connect), mandating biometric hardware security keys and multi-factor authentication before tunneling remote client sessions. Designed an obfuscated network edge architecture using an OVHcloud VPS reverse proxy shield, enabling public application accessibility while keeping 100% of inbound WAN ports securely closed on the residential perimeter. Established a high-throughput, kernel-level WireGuard data tunnel bridging the cloud VPS to a home network infrastructure core, bypassing traditional user-space performance overhead to achieve seamless 4K media streaming routing. Deployed a hybrid CrowdSec Intrusion Prevention System (IPS) across both the cloud proxy and home gateway node; configured real-time Local API logs to block malicious IP vectors at the cloud edge before they cross the home network boundary. Hardened the public-facing cloud perimeter by compiling Caddy Server with Layer4 extensions to ingest raw TCP/UDP packets, integrating a MaxMind GeoIP database for geometric whitelisting, and layering an Authelia gateway for administrative authentication. Engineered a 3-node high-availability (HA) Proxmox VE hypervisor cluster incorporating an isolated firewall core (Intel N300), a high-density compute/storage node (Ryzen 5), and an ARM64-based resilience voting quorum node (Raspberry Pi). Configured a virtualized OPNsense firewall architecture serving as the home core, integrating Zenarmor Layer 7 Deep Packet Inspection and a decoupled, privacy-hardened Oblivious DoH (ODoH) / DNS-over-QUIC (DoQ) model to strip ISP tracking footprints. Implemented strict 802.1Q VLAN segmentation across physical managed switches to dynamically isolate corporate assets, insecure smart IoT devices, and guest traffic, minimizing the internal horizontal attack surface. Deployed a fault-tolerant Unraid storage array passing through native LSI HBA / SATA storage controllers, backed by an incremental, block-level Proxmox Backup Server (PBS) routine to safeguard core infrastructure snapshots. Programmed an automated data center infrastructure Network UPS Tools (NUT) master-slave loop wired to a smart UPS to monitor real-time voltage thresholds and initiate graceful, safe database shutdowns during power grid failure events. PROFESSIONAL EXPERIENCE AMAZON | October 2016 – December 2025 Dispatch Manager | April 2020 – December 2025 Directed daily logistics operations, dispatching 25+ delivery vans and trucks under strict, time-critical 30-minute launch windows. Functioned as the Central Point of Contact for real-time incident response, coordinating rapid communication across drivers and base teams to resolve hardware, vehicle, and routing disruptions. Handled ticket escalation and operational troubleshooting under strict SLAs, utilizing diagnostic data logs to run root-cause analysis on field failures. Generates comprehensive technical documentation and workflow templates to standardize driver tracking procedures and response metrics. Analyzed daily route telemetry and delivery metrics to identify mechanical and software bottlenecks, implementing continuous performance changes to improve driver efficiency and delivery accuracy. Quality Assurance Specialist | August 2019 – March 2020 Traveled across the tri-state area to business partners and residential hubs to monitor fulfillment flows and ensure corporate quality compliance standards were met. Investigated and resolved systemic delivery failures by gathering on-site field performance data and generating formal incident reports for regional logistics coordinators to enact operational corrections. Ambassador | January 2018 – August 2019 Served as a technical and workflow liaison between shift management teams and floor associates, ensuring proper knowledge transfers and training compliance. Spearheaded high-volume inventory flow initiatives requiring strict adherence to standard operating procedures (SOPs) and corporate technical guidelines. Managed the physical tracking and onboarding of cargo trailers, monitoring pallet layouts and package counts to meet high-volume operational targets. EDUCATION NEW JERSEY INSTITUTE OF TECHNOLOGY | Newark, NJ Professional Certificate in Software Development Core Technical Coursework: SQL \u0026 Data Modeling | Principles of Programming with Python | MERN Stack System Architecture | React \u0026 Redux Infrastructure | JavaScript Front-End Web Engineering\n",
+  "wordCount" : "925",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Brandon Extra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/resume/resume/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brandon Extra | Security \u0026 Systems Architecture",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Brandon Extra | Security &amp; Systems Architecture (Alt + H)">Brandon Extra | Security &amp; Systems Architecture</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta">
+
+<span>5 min</span>&nbsp;·&nbsp;<span>Brandon Extra</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><p>Brandon Extra
+Avenel, NJ | 732-207-2933 | <a href="mailto:brandex@brandonextra.com">brandex@brandonextra.com</a> | LinkedIn | portfolio website
+PROFESSIONAL SUMMARY
+Certified IT &amp; Network Security Specialist blending 9+ years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations.
+CERTIFICATIONS &amp; TECHNICAL PROFILE
+Active Certifications: CompTIA A+ | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate
+Active Pursuits: CompTIA Security+ | Cisco Certified Network Associate (CCNA) | AWS Certified Solutions Architect – Associate
+Code Literacy &amp; Scripting: Proficient at reading, auditing, and parsing code syntax in Python, JavaScript, PowerShell, and Bash to trace database query errors, debug deployment configuration loops, and audit application log files.
+Remote Access &amp; Zero Trust: Hybrid VPN Mesh Architectures, Zero Trust Network Access (ZTNA) Deployment (Twingate), Peer-to-Peer Mesh Overlays (Tailscale), Split-Tunnel Optimization, Least-Privilege Application Micro-Segmentation.
+Cloud &amp; Perimeter Security: Hybrid Cloud Architecture, VPS Deployment (OVHcloud), Secure Tunneling (WireGuard), Cloudflare DNS-01 ACME Automation, MaxMind GeoIP Edge Whitelisting, Authelia Access Gateways, Fail2ban Perimeter Protection.
+Networking &amp; Security: OPNsense Enterprise Firewall Administration, 802.1Q VLAN Segmentation, Wireshark Packet Analysis, CrowdSec Hybrid IPS, Splunk SIEM Monitoring, TCPDump, DNSSEC, Oblivious DoH (ODoH) Mapping, Inter-LAN DNS-over-TLS (DoT).
+Virtualization &amp; Datastores: Proxmox VE (Cluster Quorum &amp; High Availability), Docker &amp; Docker Compose Containerization, Dockhand, Unraid NAS Data Systems, Linux OS Management (Ubuntu/Debian Server), Proxmox Backup Server (PBS).
+TECHNICAL INFRASTRUCTURE PROJECTS
+Hybrid Cloud Security &amp; Multi-Node Cluster Simulation Lab | Technical Architect
+Engineered a dual-layered remote access architecture pairing a Tailscale Mesh VPN overlay for core hypervisor data-plane orchestration with a Twingate Zero Trust Network Access (ZTNA) gateway to enforce strict application-level micro-segmentation.
+Integrated the ZTNA perimeter with a centralized Authentik identity provider via OIDC (OpenID Connect), mandating biometric hardware security keys and multi-factor authentication before tunneling remote client sessions.
+Designed an obfuscated network edge architecture using an OVHcloud VPS reverse proxy shield, enabling public application accessibility while keeping 100% of inbound WAN ports securely closed on the residential perimeter.
+Established a high-throughput, kernel-level WireGuard data tunnel bridging the cloud VPS to a home network infrastructure core, bypassing traditional user-space performance overhead to achieve seamless 4K media streaming routing.
+Deployed a hybrid CrowdSec Intrusion Prevention System (IPS) across both the cloud proxy and home gateway node; configured real-time Local API logs to block malicious IP vectors at the cloud edge before they cross the home network boundary.
+Hardened the public-facing cloud perimeter by compiling Caddy Server with Layer4 extensions to ingest raw TCP/UDP packets, integrating a MaxMind GeoIP database for geometric whitelisting, and layering an Authelia gateway for administrative authentication.
+Engineered a 3-node high-availability (HA) Proxmox VE hypervisor cluster incorporating an isolated firewall core (Intel N300), a high-density compute/storage node (Ryzen 5), and an ARM64-based resilience voting quorum node (Raspberry Pi).
+Configured a virtualized OPNsense firewall architecture serving as the home core, integrating Zenarmor Layer 7 Deep Packet Inspection and a decoupled, privacy-hardened Oblivious DoH (ODoH) / DNS-over-QUIC (DoQ) model to strip ISP tracking footprints.
+Implemented strict 802.1Q VLAN segmentation across physical managed switches to dynamically isolate corporate assets, insecure smart IoT devices, and guest traffic, minimizing the internal horizontal attack surface.
+Deployed a fault-tolerant Unraid storage array passing through native LSI HBA / SATA storage controllers, backed by an incremental, block-level Proxmox Backup Server (PBS) routine to safeguard core infrastructure snapshots.
+Programmed an automated data center infrastructure Network UPS Tools (NUT) master-slave loop wired to a smart UPS to monitor real-time voltage thresholds and initiate graceful, safe database shutdowns during power grid failure events.
+PROFESSIONAL EXPERIENCE
+AMAZON | October 2016 – December 2025
+Dispatch Manager | April 2020 – December 2025
+Directed daily logistics operations, dispatching 25+ delivery vans and trucks under strict, time-critical 30-minute launch windows.
+Functioned as the Central Point of Contact for real-time incident response, coordinating rapid communication across drivers and base teams to resolve hardware, vehicle, and routing disruptions.
+Handled ticket escalation and operational troubleshooting under strict SLAs, utilizing diagnostic data logs to run root-cause analysis on field failures.
+Generates comprehensive technical documentation and workflow templates to standardize driver tracking procedures and response metrics.
+Analyzed daily route telemetry and delivery metrics to identify mechanical and software bottlenecks, implementing continuous performance changes to improve driver efficiency and delivery accuracy.
+Quality Assurance Specialist | August 2019 – March 2020
+Traveled across the tri-state area to business partners and residential hubs to monitor fulfillment flows and ensure corporate quality compliance standards were met.
+Investigated and resolved systemic delivery failures by gathering on-site field performance data and generating formal incident reports for regional logistics coordinators to enact operational corrections.
+Ambassador | January 2018 – August 2019
+Served as a technical and workflow liaison between shift management teams and floor associates, ensuring proper knowledge transfers and training compliance.
+Spearheaded high-volume inventory flow initiatives requiring strict adherence to standard operating procedures (SOPs) and corporate technical guidelines.
+Managed the physical tracking and onboarding of cargo trailers, monitoring pallet layouts and package counts to meet high-volume operational targets.
+EDUCATION NEW JERSEY INSTITUTE OF TECHNOLOGY | Newark, NJ
+Professional Certificate in Software Development
+Core Technical Coursework: SQL &amp; Data Modeling | Principles of Programming with Python | MERN Stack System Architecture | React &amp; Redux Infrastructure | JavaScript Front-End Web Engineering</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">Brandon Extra | Security &amp; Systems Architecture</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
