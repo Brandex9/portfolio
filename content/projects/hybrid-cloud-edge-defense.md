@@ -11,23 +11,78 @@ weight: 4
 
 Exposing residential IP addresses or opening inbound firewall ports introduces severe perimeter risks. This project details the design and deployment of an obfuscated edge architecture that enables secure public accessibility and zero-trust remote administration while keeping **100% of residential ingress ports closed**.
 
-            [Public Ingress]
-                    │
-                    ▼
-    [Cloudflare Edge: WAF & DNS-01 ACME]
-                    │
-                    ▼
-    [OVHcloud VPS (Canada East)]
-                    ├── Caddy Layer 4 Ingress (MaxMind GeoIP Drop: Non-US/CA)
-                    ├── Authelia Pre-Authentication Challenge
-                    └── CrowdSec Edge Remediation Bouncer
-                    │
-                    ▼ (Outbound-Initiated Kernel WireGuard Tunnel /30)
-    [Home Perimeter: Intel N300 OPNsense Core]
-                    │
-            (Strict Policy Route)
-                    ▼
-    [Internal Workloads: VLAN 10/20]
+                                [ Public Ingress / WAN ]
+                                             │
+                                             ▼
+                          ┌──────────────────────────────────────┐
+                          │           Cloudflare Edge            │
+                          │  • Edge DDoS & WAF                   │
+                          │  • Injects 'CF-Connecting-IP'        │
+                          │  • DNS-01 ACME Challenge API         │
+                          └──────────────────┬───────────────────┘
+                                             │ (HTTPS / Port 443)
+                                             ▼
+                          ┌──────────────────────────────────────┐
+                          │       OVHcloud VPS (Canada East)     │
+                          │                                      │
+                          │  1. Caddy Layer 4 Engine             │
+                          │     └─ TCP 443 raw stream ingestion  │
+                          │                                      │
+                          │  2. Caddy Layer 7 HTTP Router        │
+                          │     ├─ trusted_proxies cloudflare    │
+                          │     ├─ MaxMind GeoIP (US/CA only)    │
+                          │     └─ CrowdSec Edge Remediation     │
+                          │                                      │
+                          │  3. Pre-Auth Ingress Check           │
+                          │     └─ Forward-Auth / OIDC Challenge │
+                          │        (Validated against Authentik) │
+                          └──────────────────┬───────────────────┘
+                                             │
+                      ▲                      │
+                      |                      |
+      (Outbound Dial) │                      │ WireGuard /30 Transit Tunnel
+    (Zero Home Ports) |                      │ │ (Keepalive = 25s)
+                      |                      │ ▼
+        ┌─────────────┴───────────────────────────────────────────────────────┐
+        │ Home Perimeter: Intel i3-N300 Core                                  │
+        │ (Bare-Metal Proxmox VE + Beszel Agent)                              │
+        │                                                                     │
+        │ ┌───────────────────────────────────────────────────────────────┐   │
+        │ │ VMID 100: OPNsense Core Gateway                               │   │
+        │ │                                                               │   │
+        │ │ 🛡️ Threat Inspection & Outbound Controls:                    │    │
+        │ │ • Zenarmor (Layer 7 DPI on Inter-VLAN traffic)                │   │
+        │ │ • CrowdSec LAPI Bouncer (Firewall-level drop tables)          │   │
+        │ │ • MaxMind GeoIP (Outbound Egress Block for IoT/Staging)       │   │
+        │ │                                                               │   │
+        │ │ 🌐 Internal Routing & Edge Ingress:                           │   │
+        │ │ • os-caddy (Internal TLS termination & local VLAN routing)    │   │
+        │ │ • Tailscale Subnet Router (Admin mesh overlay fallback)       │   │
+        │ │ • Unbound DNS (Internal split-horizon & DHCP resolver)        │   │
+        │ │ • os-ddclient (Dynamic DNS sync) & git-backup (IaC configs)   │   │
+        │ └───────────────────────────────┬───────────────────────────────┘   │
+        │ │ Inter-VLAN Routing Policy                                         │
+        │ ┌───────────────────────────────▼───────────────────────────────┐   │
+        │ │ VMID 200: Central Identity & App Core (VLAN 10)               │   │
+        │ │ (Unprivileged LXC Container running Docker Compose)           │   │
+        │ │                                                               │   │
+        │ │ 🔐 Identity & Access Management:                              │   │
+        │ │ • Authentik Core (Central OIDC / WebAuthn IdP)                │   │
+        │ │ • Vaultwarden (Zero-knowledge password vault)                 │   │
+        │ │                                                               │   │
+        │ │ 🛡️ DNS & Privacy Plane:                                       │   │
+        │ │ • AdGuard Home Primary (Ad-blocking, DoQ to Control D)        │   │
+        │ │                                                               │   │
+        │ │ 📊 Applications, Financials & Portals:                        │   │
+        │ │ • Securo (Self-hosted personal finance engine)                │   │
+        │ │ • Homepage (Centralized infrastructure launchpad)             │   │
+        │ │                                                               │   │
+        │ │ 📈 Telemetry, Monitoring & Backups:                           │   │
+        │ │ • Uptime Kuma (Internal HTTP/TCP service health checks)       │   │
+        │ │ • Beszel Container Agent (System metrics exporter)            │   │
+        │ │ • Kopia Client (Automated daily snapshots to Backblaze B2)    │   │
+        │ └───────────────────────────────────────────────────────────────┘   │
+        └─────────────────────────────────────────────────────────────────────┘
 
 ---
 
@@ -36,8 +91,8 @@ Exposing residential IP addresses or opening inbound firewall ports introduces s
 ### Stateless Cloud Sentry (OVHcloud VPS)
 
 - **Compute:** 2 vCPU, 4GB RAM, running Debian 13 (Trixie) in Beauharnois, QC.
-- **Edge Ingress Hardening:** Caddy Server compiled with custom Layer 4 extensions. Ingests raw TCP/UDP streams and matches client connection origins against a local MaxMind GeoIP database to drop non-US/CA packets at the transport layer.
-- **Administrative Isolation:** Public SSH daemon disabled on public interfaces. Edge management executes exclusively across an internal WireGuard tunnel.
+- **Edge Ingress Hardening:** Caddy Server compiled with custom Layer 4 extensions. Ingests raw TCP/UDP streams at the transport layer, while utilizing Caddy's Layer 7 HTTP router to evaluate proxy headers (CF-Connecting-IP) against a local MaxMind GeoIP database to drop unauthorized regional requests at the edge.
+- **Administrative Isolation:** Public SSH daemon disabled on public WAN interfaces. Edge instance management and logging execute exclusively across the secure internal WireGuard transport layer.
 
 ### Outbound-Initiated `/30` WireGuard Transit Tunnel
 

@@ -12,7 +12,7 @@ summary: "Brandon Extra — Network Security Specialist & Aspiring NOC Analyst"
 
 ## Professional Summary
 
-Certified IT & Network Security Specialist blending 9+ years of operational leadership at Amazon with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations.
+Certified IT & Network Security Specialist blending 9+ years of operational leadership at Amazon, with advanced technical training in cloud architecture, network infrastructure, and virtualization. Transitioning into a Help Desk / NOC Analyst role to combine a strong background in real-time incident routing with a deep technical curiosity for cybersecurity and user support. Highly proficient in configuring enterprise firewall environments (OPNsense), managing hardware hypervisors (Proxmox), deploying hybrid cloud perimeters (VPS), and performing root-cause analysis. Possesses a strong ability to read, analyze, and parse multiple programming languages to diagnose backend errors and script system automations.
 
 ---
 
