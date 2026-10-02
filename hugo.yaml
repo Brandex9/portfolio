@@ -35,6 +35,8 @@ params:
         url: "/projects/hybrid-cloud-edge-defense/"
       - name: "NOC Telemetry & Packet Analysis"
         url: "/projects/soc-telemetry-packet-analysis/"
+      - name: "Physical Layer Blueprint"
+        url: "/projects/physical-hardware/"
       - name: "Full Technical Resume"
         url: "/resume/"
 

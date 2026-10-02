@@ -6,7 +6,7 @@
     <description>Recent content in Engineering Projects &amp; Systems Architecture on Brandon Extra | Security &amp; Systems Architecture</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Production Multi-VLAN Network Segmentation &amp; Threat Isolation</title>
@@ -28,6 +28,13 @@
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/projects/hybrid-cloud-edge-defense/</guid>
       <description>Architecting an obfuscated edge perimeter using a stateless OVHcloud VPS, Caddy Layer 4 filtering, MaxMind GeoIP gating, and a kernel-level WireGuard transit pipe.</description>
+    </item>
+    <item>
+      <title>Physical Layer Blueprint: Non-Blocking 10G SFP&#43; Core Fabric</title>
+      <link>http://localhost:1313/projects/physical-hardware/</link>
+      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/physical-hardware/</guid>
+      <description>Engineering a multi-gigabit hardware switching matrix pairing an Intel i3-N300 OPNsense core router with a 10G SFP+ MikroTik aggregation spine and an Omada PoE+ edge plane.</description>
     </item>
     <item>
       <title>NOC/SOC Defense: Packet Analysis, Threat Bouncing, and SIEM Telemetry</title>

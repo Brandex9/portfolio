@@ -38,6 +38,14 @@ Certified IT & Network Security Specialist blending 9+ years of operational lead
 
 ---
 
+## Professional Experience
+
+Amazon | Operations & Incident Logistics Leader 2017 – Present
+
+- Orchestrate real-time incident routing and queue prioritization for high-volume delivery operations, maintaining 99.8% SLA compliance under tight operational thresholds.
+- Conduct root-cause analysis (RCA) on process bottlenecks and operational telemetry failures, implementing data-driven remediation workflows across cross-functional teams.
+- Lead and mentor large, fast-paced teams, translating complex metrics into actionable dispatching queues and managing multi-channel escalation paths during high-severity system exceptions.
+
 ## Certifications & Education
 
 - **Security & Networking Certifications:** _CompTIA A+ | Google Cybersecurity Professional Certificate | NJIT Software Development Professional Certificate_

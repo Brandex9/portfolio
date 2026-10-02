@@ -105,6 +105,6 @@ Exposing residential IP addresses or opening inbound firewall ports introduces s
 
 Dual-layered remote connectivity is enforced based on risk posture and device identity:
 
-1. **Hypervisor Data-Plane Orchestration:** Tailscale mesh overlay with Split DNS routing internal domains (`*.extra-infra.net`) directly across the WireGuard transport layer.
+1. **Hypervisor Data-Plane Orchestration:** Tailscale mesh overlay with Split DNS routing internal domains (`*brandonextra.com`) directly across the WireGuard transport layer.
 2. **Application-Level Micro-Segmentation:** Twingate ZTNA gateways deployed within container runtimes. Access policies enforce least-privilege resource assignments—remote devices access single IP:Port endpoints without granting network-wide Layer 3 subnet exposure.
 3. **Hardware Key Authentication:** Centralized Authentik Identity Provider (IdP) enforcing FIDO2/WebAuthn hardware security keys and OIDC claims before authorizing remote tunnels.
