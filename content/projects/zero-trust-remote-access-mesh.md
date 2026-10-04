@@ -34,6 +34,7 @@ Deploying a single monolithic VPN introduces lateral movement risks and breaks n
 
 ## 2. Ingress & Routing Topology
 
+```text
                                      [ THE PUBLIC WAN INTERNET ]
                                                     │
                     ┌───────────────────────────────┼──────────────────────────────┐
@@ -87,3 +88,36 @@ Deploying a single monolithic VPN introduces lateral movement risks and breaks n
      │   │  └────────────────────────┘                   └────────────────────────┘              │   │
      │   └───────────────────────────────────────────────────────────────────────────────────────┘   │
      └───────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 3. Engineering Implementation Details
+
+### Tier 1: Pangolin & Authentik Dynamic Webhook Gating
+
+Consumer smart TVs and streaming appliances cannot process interactive HTTP 302 redirects triggered by authentication forward proxies.
+
+- Pangolin runs isolated inside **DMZ_MEDIA (VLAN 30)** on the AMD Ryzen 5 compute node.
+- When family members or mobile clients complete FIDO2/WebAuthn verification on their personal browser, an event-driven webhook executes an API call against Pangolin to dynamically whitelist the originating residential WAN IP for a 24-hour lease window.
+
+### Tier 2: Twingate Least-Privilege Administrative Access
+
+- The Twingate Connector is deployed as an unprivileged container in **APP_CORE (VLAN 10)**.
+- Point-to-point software-defined perimeters replace traditional Layer 3 VPN connections. Administrators connect exclusively to designated host:port definitions (e.g., `10.1.1.2:8006` for the Proxmox UI), preventing lateral discovery or network-wide port scans.
+
+### Tier 3: Tailscale Mesh with GL.iNet Hardware Integration
+
+- OPNsense on the Intel N300 runs Tailscale as a kernel-accelerated Subnet Router.
+- A portable **GL.iNet Slate 7 Pro** travel router acts as a mobile satellite node configured on `10.150.1.0/24`. Client devices connected to the mobile travel Wi-Fi automatically resolve internal DNS records (`*brandonextra.com`) through the secure mesh backhaul without per-device client software.
+
+---
+
+## 4. Production Automation & Code Artifacts
+
+### Authentik-to-Pangolin Dynamic IP Synchronizer
+
+To bridge headless client devices with zero-trust forward authentication, a custom event-driven Python microservice integrates Authentik's notification webhook bus directly with Pangolin's REST API. When an authenticated user completes WebAuthn verification, the engine extracts the validated client WAN IP (stripping multi-hop proxy headers) and provisions a temporary whitelist lease on the media ingress proxy.
+
+- **GitHub Repository:** [`Brandex9/authentik-pangolin-sync`](https://github.com/Brandex9/authentik-pangolin-sync)
+- **Core Capabilities:** Upstream reverse-proxy header sanitization (`CF-Connecting-IP`, `X-Forwarded-For`), scoped API bearer token authentication, dynamic TTL lease management, and integrated health probes.
