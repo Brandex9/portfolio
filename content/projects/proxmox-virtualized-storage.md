@@ -73,7 +73,7 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
 ### Node 3: Raspberry Pi 5 Standalone Resiliency Anchor [VMID 500 - 599]
 
 - **Infrastructure Independence:** Powered directly via 2.5G PoE+ HAT inside an aluminum chassis (completely isolated from the Proxmox cluster failure domain).
-- **VMID 500 ([NUT Master](https://github.com/Brandex9/pve-nut-orchestrator)):** Hardwired via USB to a CyberPower CP1500PFCLCD Pure Sine Wave UPS; coordinates automated orderly hypervisor shutdown sequences during power loss events.
+- **VMID 500 (NUT Master):** Hardwired via USB to a CyberPower CP1500PFCLCD Pure Sine Wave UPS; coordinates automated orderly hypervisor shutdown sequences during power loss events.
 - **VMID 520 (Fallback DNS Engine):** Secondary AdGuard Home instance with local `ctrld` proxy routing DoQ and automated failover to Quad9 Oblivious DoH.
 
 ---
@@ -91,3 +91,14 @@ To eliminate network bottlenecks during backup jobs and real-time transcode inge
 
 - **Atomic Hardlinks:** Unraid array topology leverages a unified parent share (`/mnt/user/data/`), enabling containers to execute instant 0ms hardlink pointer moves between download scratch disks and media libraries without provoking disk thrashing.
 - **Two-Tier Disaster Recovery:** Local block-level snapshots route to an isolated Proxmox Backup Server (PBS) datastore, while mission-critical configuration ledgers and application databases are encrypted client-side via Kopia and shipped to Backblaze B2.
+
+---
+
+## 4. Automation & Code Artifacts
+
+### Enterprise Proxmox NUT Shutdown Orchestrator
+
+To solve the risk of disk parity invalidation and database corruption during utility power failures, an automated Python orchestration engine interacts directly with the Proxmox VE 8.x REST API. Triggered by Network UPS Tools (NUT) on the Raspberry Pi 5, it executes ordered guest teardowns (Applications $\rightarrow$ Storage Array $\rightarrow$ Core Gateway) before issuing host-level ACPI poweroffs.
+
+- **GitHub Repository:** [`Brandex9/pve-nut-orchestrator`](https://github.com/Brandex9/pve-nut-orchestrator)
+- **Core Capabilities:** Scoped Proxmox RBAC API integration, state polling, asynchronous timeout buffers, and zero-loss storage unmounting.
