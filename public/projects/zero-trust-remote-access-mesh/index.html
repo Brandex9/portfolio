@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Intent-Based Zero Trust: Tri-Tier Remote Access &amp; Ingress Microsegmentation | Brandon Extra | Security &amp; Systems Architecture</title>
+<meta name="keywords" content="Zero-Trust, ZTNA, Twingate, Tailscale, Authentik, WireGuard, Networking">
+<meta name="description" content="Partitioning enterprise remote access into specialized operational scopes using Pangolin IP-gating, Twingate least-privilege ZTNA, and a Tailscale travel mesh.">
+<meta name="author" content="Brandon Extra">
+<link rel="canonical" href="http://localhost:1313/projects/zero-trust-remote-access-mesh/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/projects/zero-trust-remote-access-mesh/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="http://localhost:1313/projects/zero-trust-remote-access-mesh/">
+  <meta property="og:site_name" content="Brandon Extra | Security & Systems Architecture">
+  <meta property="og:title" content="Intent-Based Zero Trust: Tri-Tier Remote Access & Ingress Microsegmentation">
+  <meta property="og:description" content="Partitioning enterprise remote access into specialized operational scopes using Pangolin IP-gating, Twingate least-privilege ZTNA, and a Tailscale travel mesh.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="article:published_time" content="2026-10-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-10-03T00:00:00+00:00">
+    <meta property="article:tag" content="Zero-Trust">
+    <meta property="article:tag" content="ZTNA">
+    <meta property="article:tag" content="Twingate">
+    <meta property="article:tag" content="Tailscale">
+    <meta property="article:tag" content="Authentik">
+    <meta property="article:tag" content="WireGuard">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Intent-Based Zero Trust: Tri-Tier Remote Access & Ingress Microsegmentation">
+  <meta name="twitter:description" content="Partitioning enterprise remote access into specialized operational scopes using Pangolin IP-gating, Twingate least-privilege ZTNA, and a Tailscale travel mesh.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Engineering Projects \u0026 Systems Architecture",
+      "item": "http://localhost:1313/projects/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Intent-Based Zero Trust: Tri-Tier Remote Access \u0026 Ingress Microsegmentation",
+      "item": "http://localhost:1313/projects/zero-trust-remote-access-mesh/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Intent-Based Zero Trust: Tri-Tier Remote Access \u0026 Ingress Microsegmentation",
+  "name": "Intent-Based Zero Trust: Tri-Tier Remote Access \u0026 Ingress Microsegmentation",
+  "description": "Partitioning enterprise remote access into specialized operational scopes using Pangolin IP-gating, Twingate least-privilege ZTNA, and a Tailscale travel mesh.",
+  "keywords": [
+    "Zero-Trust", "ZTNA", "Twingate", "Tailscale", "Authentik", "WireGuard", "Networking"
+  ],
+  "articleBody": "Executive Summary Deploying a single monolithic VPN introduces lateral movement risks and breaks non-technical user workflows. This deployment implements Intent-Based Access Control (IBAC), partitioning remote access into three isolated planes: application-level ZTNA for administration, automated hardware-level mesh routing for mobile travel, and dynamic IP-whitelisted edge proxying for consumer client hardware.\n1. Architectural Allocation Matrix Access Vector Technology Tier Target Scope Security Policy \u0026 Ingress Mechanics Consumer Application Ingress Pangolin + Authentik Media \u0026 Streaming Workloads (VLAN 30) Ingests native smart TV/client app requests without VPN clients. Authentik fires webhooks upon WebAuthn validation to dynamically whitelist consumer WAN IPs on Pangolin. Administrative Control Plane Twingate (ZTNA) Core Management (VLAN 10 \u0026 VLAN 1) Enforces micro-segmented, least-privilege resource mapping. Grants point-to-point socket access (e.g., 10.1.1.2:8006) without exposing Layer 3 subnets. Infrastructure Mesh Backhaul Tailscale Physical Node Interconnect Encrypted WireGuard overlay bridging remote hardware (GL.iNet Slate 7 Pro) to OPNsense via Subnet Routing and Split-Horizon DNS. 2. Ingress \u0026 Routing Topology [ THE PUBLIC WAN INTERNET ]\r│\r┌───────────────────────────────┼──────────────────────────────┐\r▼ (Public Web / Media Ingress) ▼ (ZTNA Admin Traffic) ▼ (Mesh Satellite Bridge)\r┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐\r│ Cloudflare Edge │ │ Twingate Relays │ │ Tailscale DERP Fleet │\r│ • DDoS/WAF Gating │ │ • Identity Brokered│ │ • Encrypted P2P Mesh │\r└──────────┬───────────┘ └──────────┬───────────┘ └──────────┬───────────┘\r│ (Port 443) │ │\r▼ │ (Direct Outbound Egress) │ (Direct Outbound Egress)\r┌──────────────────────┐ │ │\r│ OVHcloud VPS Edge │ │ │\r│ • Caddy L4/L7 SNI │ │ │\r│ • GeoIP / CrowdSec │ │ │\r└──────────┬───────────┘ │ │\r│ │ │\r│ (Outbound WireGuard /30) │ │\r▼ ▼ ▼\r┌─────────────────────────────── HOME FIREWALL BOUNDARY ────────────────────────────────────────┐\r│ │\r│ ┌───────────────────────────────────────────────────────────────────────────────────────┐ │\r│ │ VMID 100: OPNsense Core Gateway (Intel i3-N300 Node) │ │\r│ │ • Static Inbound WAN Ports: 0 OPEN (All Ingress Outbound-Initiated) │ │\r│ │ • Tailscale Subnet Router (Mesh Bridge to Travel Slate 7 Pro) │ │\r│ │ • Zenarmor Layer 7 DPI (Deep Packet Inspection on Inter-VLAN Traffic) │ │\r│ └──────────────────────────────────────────┬────────────────────────────────────────────┘ │\r└──────────────────────────────────────────────┼────────────────────────────────────────────────┘\r│ (802.1Q Trunk / 10G MikroTik CRS305 Spine)\r▼\r┌───────────────────────────────── COMPUTATION \u0026 CLUSTER FABRIC ────────────────────────────────┐\r│ │\r│ [ NODE 1: Intel i3-N300 Core ] │\r│ ┌─────────────────────────────── VMID 200: App Core Container (VLAN 10) ────────────────┐ │\r│ │ │ │\r│ │ ┌────────────────────────┐ ┌────────────────────────┐ │ │\r│ │ │ Authentik IdP Core │ │ Twingate Connector │ │ │\r│ │ │ • 10.10.10.10 │ │ • 10.10.10.20 │ │ │\r│ │ │ • WebAuthn / OIDC │ │ • Scoped Resource Broker │ │\r│ │ └───────────┬────────────┘ └────────────────────────┘ │ │\r│ └──────────────│────────────────────────────────────────────────────────────────────────┘ │\r│ │ │\r│ │ (Cross-VLAN Webhook Auth / Dynamic IP Allow) │\r│ ▼ │\r│ [ NODE 2: AMD Ryzen 5 Core ] │\r│ ┌──────────────┴──────────────── LXC 310: DMZ Media Cluster (VLAN 30) ──────────────────┐ │\r│ │ │ │\r│ │ ┌────────────────────────┐ ┌────────────────────────┐ │ │\r│ │ │ Pangolin Ingress Proxy │ │ Jellyfin Media Server │ │ │\r│ │ │ • 10.30.30.30 │──────────────────►│ • 10.30.30.40 │ │ │\r│ │ │ • Dynamic IP Whitelist │ (Local Stream) │ • Hardware NVENC Trans │ │ │\r│ │ └────────────────────────┘ └────────────────────────┘ │ │\r│ └───────────────────────────────────────────────────────────────────────────────────────┘ │\r└───────────────────────────────────────────────────────────────────────────────────────────────┘\r",
+  "wordCount" : "535",
+  "inLanguage": "en",
+  "datePublished": "2026-10-03T00:00:00Z",
+  "dateModified": "2026-10-03T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Brandon Extra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/projects/zero-trust-remote-access-mesh/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brandon Extra | Security \u0026 Systems Architecture",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Brandon Extra | Security &amp; Systems Architecture (Alt + H)">Brandon Extra | Security &amp; Systems Architecture</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/projects/">Engineering Projects &amp; Systems Architecture</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      Intent-Based Zero Trust: Tri-Tier Remote Access &amp; Ingress Microsegmentation
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-10-03 00:00:00 +0000 UTC'>October 3, 2026</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Brandon Extra</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="executive-summary">Executive Summary<a hidden class="anchor" aria-hidden="true" href="#executive-summary">#</a></h2>
+<p>Deploying a single monolithic VPN introduces lateral movement risks and breaks non-technical user workflows. This deployment implements <strong>Intent-Based Access Control (IBAC)</strong>, partitioning remote access into three isolated planes: application-level ZTNA for administration, automated hardware-level mesh routing for mobile travel, and dynamic IP-whitelisted edge proxying for consumer client hardware.</p>
+<hr>
+<h2 id="1-architectural-allocation-matrix">1. Architectural Allocation Matrix<a hidden class="anchor" aria-hidden="true" href="#1-architectural-allocation-matrix">#</a></h2>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Access Vector</th>
+					<th style="text-align: left">Technology Tier</th>
+					<th style="text-align: left">Target Scope</th>
+					<th style="text-align: left">Security Policy &amp; Ingress Mechanics</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>Consumer Application Ingress</strong></td>
+					<td style="text-align: left"><strong>Pangolin + Authentik</strong></td>
+					<td style="text-align: left">Media &amp; Streaming Workloads (<code>VLAN 30</code>)</td>
+					<td style="text-align: left">Ingests native smart TV/client app requests without VPN clients. Authentik fires webhooks upon WebAuthn validation to dynamically whitelist consumer WAN IPs on Pangolin.</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Administrative Control Plane</strong></td>
+					<td style="text-align: left"><strong>Twingate (ZTNA)</strong></td>
+					<td style="text-align: left">Core Management (<code>VLAN 10</code> &amp; <code>VLAN 1</code>)</td>
+					<td style="text-align: left">Enforces micro-segmented, least-privilege resource mapping. Grants point-to-point socket access (e.g., <code>10.1.1.2:8006</code>) without exposing Layer 3 subnets.</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Infrastructure Mesh Backhaul</strong></td>
+					<td style="text-align: left"><strong>Tailscale</strong></td>
+					<td style="text-align: left">Physical Node Interconnect</td>
+					<td style="text-align: left">Encrypted WireGuard overlay bridging remote hardware (GL.iNet Slate 7 Pro) to OPNsense via Subnet Routing and Split-Horizon DNS.</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="2-ingress--routing-topology">2. Ingress &amp; Routing Topology<a hidden class="anchor" aria-hidden="true" href="#2-ingress--routing-topology">#</a></h2>
+<pre><code>                                 [ THE PUBLIC WAN INTERNET ]
+                                                │
+                ┌───────────────────────────────┼──────────────────────────────┐
+                ▼ (Public Web / Media Ingress)  ▼ (ZTNA Admin Traffic)         ▼ (Mesh Satellite Bridge)
+     ┌──────────────────────┐        ┌──────────────────────┐       ┌──────────────────────┐
+     │   Cloudflare Edge    │        │   Twingate Relays    │       │ Tailscale DERP Fleet │
+     │   • DDoS/WAF Gating  │        │   • Identity Brokered│       │ • Encrypted P2P Mesh │
+     └──────────┬───────────┘        └──────────┬───────────┘       └──────────┬───────────┘
+                │ (Port 443)                    │                              │
+                ▼                               │ (Direct Outbound Egress)     │ (Direct Outbound Egress)
+     ┌──────────────────────┐                   │                              │
+     │  OVHcloud VPS Edge   │                   │                              │
+     │  • Caddy L4/L7 SNI   │                   │                              │
+     │  • GeoIP / CrowdSec  │                   │                              │
+     └──────────┬───────────┘                   │                              │
+                │                               │                              │
+                │ (Outbound WireGuard /30)      │                              │
+                ▼                               ▼                              ▼
+ ┌─────────────────────────────── HOME FIREWALL BOUNDARY ────────────────────────────────────────┐
+ │                                                                                               │
+ │   ┌───────────────────────────────────────────────────────────────────────────────────────┐   │
+ │   │ VMID 100: OPNsense Core Gateway (Intel i3-N300 Node)                                  │   │
+ │   │  • Static Inbound WAN Ports: 0 OPEN (All Ingress Outbound-Initiated)                  │   │
+ │   │  • Tailscale Subnet Router (Mesh Bridge to Travel Slate 7 Pro)                        │   │
+ │   │  • Zenarmor Layer 7 DPI (Deep Packet Inspection on Inter-VLAN Traffic)                │   │
+ │   └──────────────────────────────────────────┬────────────────────────────────────────────┘   │
+ └──────────────────────────────────────────────┼────────────────────────────────────────────────┘
+                                                │ (802.1Q Trunk / 10G MikroTik CRS305 Spine)
+                                                ▼
+ ┌───────────────────────────────── COMPUTATION &amp; CLUSTER FABRIC ────────────────────────────────┐
+ │                                                                                               │
+ │   [ NODE 1: Intel i3-N300 Core ]                                                              │
+ │   ┌─────────────────────────────── VMID 200: App Core Container (VLAN 10) ────────────────┐   │
+ │   │                                                                                       │   │
+ │   │  ┌────────────────────────┐                   ┌────────────────────────┐              │   │
+ │   │  │ Authentik IdP Core     │                   │ Twingate Connector     │              │   │
+ │   │  │ • 10.10.10.10          │                   │ • 10.10.10.20          │              │   │
+ │   │  │ • WebAuthn / OIDC      │                   │ • Scoped Resource Broker              │   │
+ │   │  └───────────┬────────────┘                   └────────────────────────┘              │   │
+ │   └──────────────│────────────────────────────────────────────────────────────────────────┘   │
+ │                  │                                                                            │
+ │                  │ (Cross-VLAN Webhook Auth / Dynamic IP Allow)                               │
+ │                  ▼                                                                            │
+ │   [ NODE 2: AMD Ryzen 5 Core ]                                                                │
+ │   ┌──────────────┴──────────────── LXC 310: DMZ Media Cluster (VLAN 30) ──────────────────┐   │
+ │   │                                                                                       │   │
+ │   │  ┌────────────────────────┐                   ┌────────────────────────┐              │   │
+ │   │  │ Pangolin Ingress Proxy │                   │ Jellyfin Media Server  │              │   │
+ │   │  │ • 10.30.30.30          │──────────────────►│ • 10.30.30.40          │              │   │
+ │   │  │ • Dynamic IP Whitelist │  (Local Stream)   │ • Hardware NVENC Trans │              │   │
+ │   │  └────────────────────────┘                   └────────────────────────┘              │   │
+ │   └───────────────────────────────────────────────────────────────────────────────────────┘   │
+ └───────────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/zero-trust/">Zero-Trust</a></li>
+      <li><a href="http://localhost:1313/tags/ztna/">ZTNA</a></li>
+      <li><a href="http://localhost:1313/tags/twingate/">Twingate</a></li>
+      <li><a href="http://localhost:1313/tags/tailscale/">Tailscale</a></li>
+      <li><a href="http://localhost:1313/tags/authentik/">Authentik</a></li>
+      <li><a href="http://localhost:1313/tags/wireguard/">WireGuard</a></li>
+      <li><a href="http://localhost:1313/tags/networking/">Networking</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/projects/proxmox-virtualized-storage/">
+    <span class="title">« Prev</span>
+    <span>Multi-Node Hypervisor Fabric &amp; Hardware-Accelerated Storage Cluster</span>
+  </a>
+  <a class="next" href="http://localhost:1313/projects/tier2-disaster-recovery/">
+    <span class="title">Next »</span>
+    <span>Two-Tier Disaster Recovery &amp; Hardened Container Orchestration</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">Brandon Extra | Security &amp; Systems Architecture</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

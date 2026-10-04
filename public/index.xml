@@ -6,7 +6,7 @@
     <description>Recent content on Brandon Extra | Security &amp; Systems Architecture</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Production Multi-VLAN Network Segmentation &amp; Threat Isolation</title>
@@ -14,6 +14,20 @@
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/projects/enterprise-vlan-segmentation/</guid>
       <description>Design and deployment of an enterprise 6-VLAN network topology utilizing virtualized OPNsense, Zenarmor DPI, and default-deny inter-VLAN filtering.</description>
+    </item>
+    <item>
+      <title>Multi-Node Hypervisor Fabric &amp; Hardware-Accelerated Storage Cluster</title>
+      <link>http://localhost:1313/projects/proxmox-virtualized-storage/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/proxmox-virtualized-storage/</guid>
+      <description>Implementation of a 3-node fault-tolerant virtualization architecture featuring IOMMU hardware passthrough, local ZFS mirror pools, a 10G MikroTik spine, and decoupled power resiliency.</description>
+    </item>
+    <item>
+      <title>Intent-Based Zero Trust: Tri-Tier Remote Access &amp; Ingress Microsegmentation</title>
+      <link>http://localhost:1313/projects/zero-trust-remote-access-mesh/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/zero-trust-remote-access-mesh/</guid>
+      <description>Partitioning enterprise remote access into specialized operational scopes using Pangolin IP-gating, Twingate least-privilege ZTNA, and a Tailscale travel mesh.</description>
     </item>
     <item>
       <title>Two-Tier Disaster Recovery &amp; Hardened Container Orchestration</title>
@@ -28,13 +42,6 @@
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/projects/hybrid-cloud-edge-defense/</guid>
       <description>Architecting an obfuscated edge perimeter using a stateless OVHcloud VPS, Caddy Layer 4 filtering, MaxMind GeoIP gating, and a kernel-level WireGuard transit pipe.</description>
-    </item>
-    <item>
-      <title>Physical Layer Blueprint: Non-Blocking 10G SFP&#43; Core Fabric</title>
-      <link>http://localhost:1313/projects/physical-hardware/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/physical-hardware/</guid>
-      <description>Engineering a multi-gigabit hardware switching matrix pairing an Intel i3-N300 OPNsense core router with a 10G SFP+ MikroTik aggregation spine and an Omada PoE+ edge plane.</description>
     </item>
     <item>
       <title>NOC/SOC Defense: Packet Analysis, Threat Bouncing, and SIEM Telemetry</title>

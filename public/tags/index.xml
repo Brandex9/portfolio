@@ -6,48 +6,62 @@
     <description>Recent content in Tags on Brandon Extra | Security &amp; Systems Architecture</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>10GbE</title>
-      <link>http://localhost:1313/tags/10gbe/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/10gbe/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Hardware</title>
-      <link>http://localhost:1313/tags/hardware/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/hardware/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>MikroTik</title>
-      <link>http://localhost:1313/tags/mikrotik/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/mikrotik/</guid>
+      <title>Authentik</title>
+      <link>http://localhost:1313/tags/authentik/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/authentik/</guid>
       <description></description>
     </item>
     <item>
       <title>Networking</title>
       <link>http://localhost:1313/tags/networking/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/networking/</guid>
       <description></description>
     </item>
     <item>
-      <title>Omada</title>
-      <link>http://localhost:1313/tags/omada/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/omada/</guid>
+      <title>Tailscale</title>
+      <link>http://localhost:1313/tags/tailscale/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/tailscale/</guid>
       <description></description>
     </item>
     <item>
-      <title>OPNsense</title>
-      <link>http://localhost:1313/tags/opnsense/</link>
-      <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/opnsense/</guid>
+      <title>Twingate</title>
+      <link>http://localhost:1313/tags/twingate/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/twingate/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>WireGuard</title>
+      <link>http://localhost:1313/tags/wireguard/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/wireguard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zero-Trust</title>
+      <link>http://localhost:1313/tags/zero-trust/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/zero-trust/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ZTNA</title>
+      <link>http://localhost:1313/tags/ztna/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/ztna/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>10GbE</title>
+      <link>http://localhost:1313/tags/10gbe/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/10gbe/</guid>
       <description></description>
     </item>
     <item>
@@ -135,6 +149,20 @@
       <description></description>
     </item>
     <item>
+      <title>OPNsense</title>
+      <link>http://localhost:1313/tags/opnsense/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/opnsense/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PCIe-Passthrough</title>
+      <link>http://localhost:1313/tags/pcie-passthrough/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/pcie-passthrough/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Phishing</title>
       <link>http://localhost:1313/tags/phishing/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
@@ -191,17 +219,24 @@
       <description></description>
     </item>
     <item>
+      <title>Unraid</title>
+      <link>http://localhost:1313/tags/unraid/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/unraid/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virtualization</title>
+      <link>http://localhost:1313/tags/virtualization/</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/virtualization/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>VLANs</title>
       <link>http://localhost:1313/tags/vlans/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/vlans/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>WireGuard</title>
-      <link>http://localhost:1313/tags/wireguard/</link>
-      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/wireguard/</guid>
       <description></description>
     </item>
     <item>
@@ -219,17 +254,10 @@
       <description></description>
     </item>
     <item>
-      <title>Zero-Trust</title>
-      <link>http://localhost:1313/tags/zero-trust/</link>
+      <title>ZFS</title>
+      <link>http://localhost:1313/tags/zfs/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/zero-trust/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>ZTNA</title>
-      <link>http://localhost:1313/tags/ztna/</link>
-      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/ztna/</guid>
+      <guid>http://localhost:1313/tags/zfs/</guid>
       <description></description>
     </item>
   </channel>

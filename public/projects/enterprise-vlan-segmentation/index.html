@@ -84,8 +84,8 @@
   "keywords": [
     "OPNsense", "Firewall", "VLANs", "Zenarmor", "Zero-Trust", "Networking"
   ],
-  "articleBody": "Executive Summary Transitioned an unmanaged flat consumer network into an enterprise-grade private IP addressing fabric. The deployment enforces strict inter-VLAN default-deny boundaries, layer-7 deep packet inspection (DPI), isolated out-of-band hypervisor management, and an air-gapped security staging sandbox.\n1. Network Topology \u0026 Addressing Schema Routing and packet inspection are handled by an Intel i3-N300 hardware node running a virtualized OPNsense Core Router (VMID 100) over 4x Intel i226-V 2.5GbE interfaces, connected to a TP-Link Omada SG2210XMP-M2 managed 2.5G PoE+ switch.\nVLAN ID Subnet CIDR Zone Purpose Isolation \u0026 Ingress/Egress Rules VLAN 1 192.168.1.0/24 TRUSTED_LAN Primary workstation access; tightly restricted dynamic scope (.200-.220) with static DHCP reservations for authorized physical nodes. VLAN 2 192.168.2.0/24 OOB_MGMT Air-gapped management network for Proxmox VE hypervisor web consoles, Unraid administration dashboards, and switch UI. Inaccessible from WAN or standard subnets. VLAN 10 10.10.10.0/24 APP_CORE Core identity control plane hosting Authentik OIDC forward-auth engine, Vaultwarden password vault, and AdGuard Home DNS. VLAN 20 10.20.20.0/24 DMZ_MEDIA High-throughput containerized media stack and transcode workloads on the Ryzen compute core. VLAN 30 10.30.30.0/24 IOT_SMART Home automation appliances, smart TVs, and IoT microcontrollers. Default-deny rule back into internal RFC1918 subnets; untrusted devices restricted via explicit MAC drop loops. VLAN 40 10.40.40.0/24 GUEST_NET Direct-to-WAN guest internet only. DHCP lease times compressed to 2 hours with client isolation enabled. VLAN 99 10.99.99.0/24 STAGING Sandboxed forensic/test laboratory for packet capturing untrusted containers and new images. Dropped from 100% of lateral internal network routes. 2. Firewall Policy \u0026 Packet Filtering Design Inter-VLAN Isolation Matrix The firewall applies a Zero-Trust Default-Deny model across all subnets:\n[VLAN 30: IoT] ──(BLOCKED)──\u003e [VLAN 1, 2, 10, 20] [VLAN 40: Guest] ──(BLOCKED)──\u003e [ALL INTERNAL RFC1918] [VLAN 99: Stage] ──(BLOCKED)──\u003e [ALL INTERNAL RFC1918 (WAN Outbound Only)] [VLAN 1: Admin] ──(ALLOW)────\u003e [VLAN 2, 10, 20, 30] (Stateful inspection) Step 3: Build the Second Project (Proxmox Compute \u0026 Storage Cluster) Create the virtualization case study at content/projects/proxmox-virtualized-storage.md:\n--- title: \"Multi-Node Hypervisor Fabric \u0026 Hardware-Accelerated Storage Cluster\" date: 2026-09-30 draft: false tags: [\"Proxmox\", \"Unraid\", \"ZFS\", \"PCIe-Passthrough\", \"Virtualization\"] summary: \"Implementation of a 3-node fault-tolerant virtualization architecture featuring IOMMU hardware passthrough, local ZFS mirror pools, and decoupled power resiliency.\" weight: 2 --- ## Architecture Overview A purpose-built hybrid hypervisor architecture running Proxmox VE, combining high-efficiency gateway compute, dedicated high-throughput array storage, and out-of-band power orchestration. --- ## 1. Node Topology \u0026 Workload Segmentation ### Node 1: Intel i3-N300 Gateway Core [VMID 100 - 299] - **Compute:** 8C/8T low-power Gracemont architecture, 16GB Crucial DDR5 4800MHz, Samsung PM9A1 NVMe. - **VMID 100 (OPNsense Router):** 8GB RAM pinned; manages Zenarmor Layer 7 DPI in-memory databases and multi-VLAN policy routing. - **VMID 200 (Identity Core LXC):** Unprivileged Linux container hosting Authentik OIDC control plane, Vaultwarden, and Primary AdGuard Home. ### Node 2: AMD Ryzen 5 Compute \u0026 Storage Core [VMID 300 - 499] - **Compute:** AMD Ryzen 5 3600 (6C/12T), ASRock B550M Pro4, 32GB DDR4 3000MHz RAM. - **Interconnect:** Mellanox ConnectX-3 10G SFP+ linked via DAC Twinax cable directly to core storage distribution. - **Local Hypervisor Tier:** Proxmox VE operating system installed across 2x Intel DC S3500 Enterprise SSDs in a mirrored ZFS pool. - **VMID 300 (Unraid VM):** Direct PCIe IOMMU passthrough of an **LSI Broadcom SAS 9211-8i HBA Card (IT-Mode)** managing mechanical hard drives alongside a dedicated Western Digital NVMe SSD cache tier. - **LXC 310 (DMZ Media):** Unprivileged container with direct NVIDIA GeForce GTX 1660 `/dev/dri` passthrough for hardware-accelerated NVENC transcode pipelines. ### Node 3: Raspberry Pi 5 Resiliency Anchor [VMID 500 - 599] - **Infrastructure Independence:** Powered via 2.5G PoE+ HAT inside an aluminum chassis (completely isolated from the Proxmox cluster domain). - **VMID 500 (NUT Master):** USB-tethered to a CyberPower CP1500PFCLCD Pure Sine Wave UPS; coordinates automated orderly hypervisor shutdown sequences during power loss events. - **VMID 520 (Fallback DNS Engine):** Secondary AdGuard Home synchronizing filters every 15 minutes, with local `ctrld` proxy routing DoQ and automated failover to Quad9 Oblivious DoH. --- ## 2. Storage Strategy \u0026 I/O Optimization - **Atomic Hardlinks:** Storage topology leverages a unified parent share (`/mnt/user/data/`), allowing Docker containers to execute instant 0ms hardlink pointer moves between download scratch disks and media libraries without invoking storage-bus write cycles. ",
-  "wordCount" : "688",
+  "articleBody": "Executive Summary Transitioned an unmanaged flat consumer network into an enterprise-grade private IP addressing fabric. The deployment enforces strict inter-VLAN default-deny boundaries, layer-7 deep packet inspection (DPI), isolated out-of-band hypervisor management, and an air-gapped security staging sandbox.\n1. Network Topology \u0026 Addressing Schema Routing and packet inspection are handled by an Intel i3-N300 hardware node running a virtualized OPNsense Core Router (VMID 100) over 4x Intel i226-V 2.5GbE interfaces, connected to a TP-Link Omada SG2210XMP-M2 managed 2.5G PoE+ switch.\nVLAN ID Subnet CIDR Zone Purpose Isolation \u0026 Ingress/Egress Rules VLAN 1 10.1.1.0/24 OOB_MGMT Air-gapped management network for Proxmox VE hypervisor web consoles, Unraid administration dashboards, and switch UI. Inaccessible from WAN or standard subnets. VLAN 10 10.10.10.0/24 APP_CORE Core identity control plane hosting Authentik OIDC forward-auth engine, Vaultwarden password vault, and AdGuard Home DNS. VLAN 20 10.20.20.0/24 TRUSTED_LAN Primary workstation access; tightly restricted dynamic scope (.200-.220) with static DHCP reservations for authorized physical nodes. VLAN 30 10.30.30.0/24 DMZ_MEDIA High-throughput containerized media stack and transcode workloads on the Ryzen compute core. VLAN 40 10.40.40.0/24 IOT_SMART Home automation appliances, smart TVs, and IoT microcontrollers. Default-deny rule back into internal RFC1918 subnets; untrusted devices restricted via explicit MAC drop loops. VLAN 50 10.50.50.0/24 GUEST_NET Direct-to-WAN guest internet only. DHCP lease times compressed to 2 hours with client isolation enabled. VLAN 99 10.99.99.0/24 STAGING Sandboxed forensic/test laboratory for packet capturing untrusted containers and new images. Dropped from 100% of lateral internal network routes. 2. Firewall Policy \u0026 Packet Filtering Design Inter-VLAN Isolation Matrix The firewall applies a Zero-Trust Default-Deny model across all subnets:\n[VLAN 40: IoT] ──(BLOCKED)──\u003e [VLAN 1, 10, 20, 30] [VLAN 50: Guest] ──(BLOCKED)──\u003e [ALL INTERNAL RFC1918] [VLAN 99: Stage] ──(BLOCKED)──\u003e [ALL INTERNAL RFC1918 (WAN Outbound Only)] [VLAN 20: Admin] ──(ALLOW)────\u003e [VLAN 1, 10, 30, 40] (Stateful return inspection) Step 3: Build the Second Project (Proxmox Compute \u0026 Storage Cluster) Create the virtualization case study at content/projects/proxmox-virtualized-storage.md:\n--- title: \"Multi-Node Hypervisor Fabric \u0026 Hardware-Accelerated Storage Cluster\" date: 2026-09-30 draft: false tags: [\"Proxmox\", \"Unraid\", \"ZFS\", \"PCIe-Passthrough\", \"Virtualization\"] summary: \"Implementation of a 3-node fault-tolerant virtualization architecture featuring IOMMU hardware passthrough, local ZFS mirror pools, and decoupled power resiliency.\" weight: 2 --- ## Architecture Overview A purpose-built hybrid hypervisor architecture running Proxmox VE, combining high-efficiency gateway compute, dedicated high-throughput array storage, and out-of-band power orchestration. --- ## 1. Node Topology \u0026 Workload Segmentation ### Node 1: Intel i3-N300 Gateway Core [VMID 100 - 299] - **Compute:** 8C/8T low-power Gracemont architecture, 16GB Crucial DDR5 4800MHz, Samsung PM9A1 NVMe. - **VMID 100 (OPNsense Router):** 8GB RAM pinned; manages Zenarmor Layer 7 DPI in-memory databases and multi-VLAN policy routing. - **VMID 200 (Identity Core LXC):** Unprivileged Linux container hosting Authentik OIDC control plane, Vaultwarden, and Primary AdGuard Home. ### Node 2: AMD Ryzen 5 Compute \u0026 Storage Core [VMID 300 - 499] - **Compute:** AMD Ryzen 5 3600 (6C/12T), ASRock B550M Pro4, 32GB DDR4 3000MHz RAM. - **Interconnect:** Mellanox ConnectX-3 10G SFP+ linked via DAC Twinax cable directly to core storage distribution. - **Local Hypervisor Tier:** Proxmox VE operating system installed across 2x Intel DC S3500 Enterprise SSDs in a mirrored ZFS pool. - **VMID 300 (Unraid VM):** Direct PCIe IOMMU passthrough of an **LSI Broadcom SAS 9211-8i HBA Card (IT-Mode)** managing mechanical hard drives alongside a dedicated Western Digital NVMe SSD cache tier. - **LXC 310 (DMZ Media):** Unprivileged container with direct NVIDIA GeForce GTX 1660 `/dev/dri` passthrough for hardware-accelerated NVENC transcode pipelines. ### Node 3: Raspberry Pi 5 Resiliency Anchor [VMID 500 - 599] - **Infrastructure Independence:** Powered via 2.5G PoE+ HAT inside an aluminum chassis (completely isolated from the Proxmox cluster domain). - **VMID 500 (NUT Master):** USB-tethered to a CyberPower CP1500PFCLCD Pure Sine Wave UPS; coordinates automated orderly hypervisor shutdown sequences during power loss events. - **VMID 520 (Fallback DNS Engine):** Secondary AdGuard Home synchronizing filters every 15 minutes, with local `ctrld` proxy routing DoQ and automated failover to Quad9 Oblivious DoH. --- ## 2. Storage Strategy \u0026 I/O Optimization - **Atomic Hardlinks:** Storage topology leverages a unified parent share (`/mnt/user/data/`), allowing Docker containers to execute instant 0ms hardlink pointer moves between download scratch disks and media libraries without invoking storage-bus write cycles. ",
+  "wordCount" : "689",
   "inLanguage": "en",
   "datePublished": "2026-09-30T00:00:00Z",
   "dateModified": "2026-09-30T00:00:00Z",
@@ -197,13 +197,7 @@
 	<tbody>
 			<tr>
 					<td style="text-align: left"><strong>VLAN 1</strong></td>
-					<td style="text-align: left"><code>192.168.1.0/24</code></td>
-					<td style="text-align: left"><strong>TRUSTED_LAN</strong></td>
-					<td style="text-align: left">Primary workstation access; tightly restricted dynamic scope (<code>.200-.220</code>) with static DHCP reservations for authorized physical nodes.</td>
-			</tr>
-			<tr>
-					<td style="text-align: left"><strong>VLAN 2</strong></td>
-					<td style="text-align: left"><code>192.168.2.0/24</code></td>
+					<td style="text-align: left"><code>10.1.1.0/24</code></td>
 					<td style="text-align: left"><strong>OOB_MGMT</strong></td>
 					<td style="text-align: left">Air-gapped management network for Proxmox VE hypervisor web consoles, Unraid administration dashboards, and switch UI. Inaccessible from WAN or standard subnets.</td>
 			</tr>
@@ -216,18 +210,24 @@
 			<tr>
 					<td style="text-align: left"><strong>VLAN 20</strong></td>
 					<td style="text-align: left"><code>10.20.20.0/24</code></td>
-					<td style="text-align: left"><strong>DMZ_MEDIA</strong></td>
-					<td style="text-align: left">High-throughput containerized media stack and transcode workloads on the Ryzen compute core.</td>
+					<td style="text-align: left"><strong>TRUSTED_LAN</strong></td>
+					<td style="text-align: left">Primary workstation access; tightly restricted dynamic scope (<code>.200-.220</code>) with static DHCP reservations for authorized physical nodes.</td>
 			</tr>
 			<tr>
 					<td style="text-align: left"><strong>VLAN 30</strong></td>
 					<td style="text-align: left"><code>10.30.30.0/24</code></td>
-					<td style="text-align: left"><strong>IOT_SMART</strong></td>
-					<td style="text-align: left">Home automation appliances, smart TVs, and IoT microcontrollers. Default-deny rule back into internal RFC1918 subnets; untrusted devices restricted via explicit MAC drop loops.</td>
+					<td style="text-align: left"><strong>DMZ_MEDIA</strong></td>
+					<td style="text-align: left">High-throughput containerized media stack and transcode workloads on the Ryzen compute core.</td>
 			</tr>
 			<tr>
 					<td style="text-align: left"><strong>VLAN 40</strong></td>
 					<td style="text-align: left"><code>10.40.40.0/24</code></td>
+					<td style="text-align: left"><strong>IOT_SMART</strong></td>
+					<td style="text-align: left">Home automation appliances, smart TVs, and IoT microcontrollers. Default-deny rule back into internal RFC1918 subnets; untrusted devices restricted via explicit MAC drop loops.</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>VLAN 50</strong></td>
+					<td style="text-align: left"><code>10.50.50.0/24</code></td>
 					<td style="text-align: left"><strong>GUEST_NET</strong></td>
 					<td style="text-align: left">Direct-to-WAN guest internet only. DHCP lease times compressed to 2 hours with client isolation enabled.</td>
 			</tr>
@@ -243,10 +243,10 @@
 <h2 id="2-firewall-policy--packet-filtering-design">2. Firewall Policy &amp; Packet Filtering Design<a hidden class="anchor" aria-hidden="true" href="#2-firewall-policy--packet-filtering-design">#</a></h2>
 <h3 id="inter-vlan-isolation-matrix">Inter-VLAN Isolation Matrix<a hidden class="anchor" aria-hidden="true" href="#inter-vlan-isolation-matrix">#</a></h3>
 <p>The firewall applies a <strong>Zero-Trust Default-Deny</strong> model across all subnets:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[VLAN 30: IoT]   ──(BLOCKED)──&gt; [VLAN 1, 2, 10, 20]
-</span></span><span style="display:flex;"><span>[VLAN 40: Guest] ──(BLOCKED)──&gt; [ALL INTERNAL RFC1918]
-</span></span><span style="display:flex;"><span>[VLAN 99: Stage] ──(BLOCKED)──&gt; [ALL INTERNAL RFC1918 (WAN Outbound Only)]
-</span></span><span style="display:flex;"><span>[VLAN 1: Admin]  ──(ALLOW)────&gt; [VLAN 2, 10, 20, 30] (Stateful inspection)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[VLAN 40: IoT]    ──(BLOCKED)──&gt; [VLAN 1, 10, 20, 30]
+</span></span><span style="display:flex;"><span>[VLAN 50: Guest]  ──(BLOCKED)──&gt; [ALL INTERNAL RFC1918]
+</span></span><span style="display:flex;"><span>[VLAN 99: Stage]  ──(BLOCKED)──&gt; [ALL INTERNAL RFC1918 (WAN Outbound Only)]
+</span></span><span style="display:flex;"><span>[VLAN 20: Admin]  ──(ALLOW)────&gt; [VLAN 1, 10, 30, 40] (Stateful return inspection)
 </span></span></code></pre></div><hr>
 <h3 id="step-3-build-the-second-project-proxmox-compute--storage-cluster">Step 3: Build the Second Project (Proxmox Compute &amp; Storage Cluster)<a hidden class="anchor" aria-hidden="true" href="#step-3-build-the-second-project-proxmox-compute--storage-cluster">#</a></h3>
 <p>Create the virtualization case study at <code>content/projects/proxmox-virtualized-storage.md</code>:</p>
@@ -306,9 +306,9 @@
       <li><a href="http://localhost:1313/tags/networking/">Networking</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="http://localhost:1313/projects/tier2-disaster-recovery/">
+  <a class="next" href="http://localhost:1313/projects/proxmox-virtualized-storage/">
     <span class="title">Next »</span>
-    <span>Two-Tier Disaster Recovery &amp; Hardened Container Orchestration</span>
+    <span>Multi-Node Hypervisor Fabric &amp; Hardware-Accelerated Storage Cluster</span>
   </a>
 </nav>
 

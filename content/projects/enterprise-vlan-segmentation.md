@@ -17,15 +17,15 @@ Transitioned an unmanaged flat consumer network into an enterprise-grade private
 
 Routing and packet inspection are handled by an **Intel i3-N300** hardware node running a virtualized **OPNsense Core Router (VMID 100)** over 4x Intel i226-V 2.5GbE interfaces, connected to a **TP-Link Omada SG2210XMP-M2** managed 2.5G PoE+ switch.
 
-| VLAN ID     | Subnet CIDR      | Zone Purpose    | Isolation & Ingress/Egress Rules                                                                                                                                                 |
-| :---------- | :--------------- | :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **VLAN 1**  | `192.168.1.0/24` | **TRUSTED_LAN** | Primary workstation access; tightly restricted dynamic scope (`.200-.220`) with static DHCP reservations for authorized physical nodes.                                          |
-| **VLAN 2**  | `192.168.2.0/24` | **OOB_MGMT**    | Air-gapped management network for Proxmox VE hypervisor web consoles, Unraid administration dashboards, and switch UI. Inaccessible from WAN or standard subnets.                |
-| **VLAN 10** | `10.10.10.0/24`  | **APP_CORE**    | Core identity control plane hosting Authentik OIDC forward-auth engine, Vaultwarden password vault, and AdGuard Home DNS.                                                        |
-| **VLAN 20** | `10.20.20.0/24`  | **DMZ_MEDIA**   | High-throughput containerized media stack and transcode workloads on the Ryzen compute core.                                                                                     |
-| **VLAN 30** | `10.30.30.0/24`  | **IOT_SMART**   | Home automation appliances, smart TVs, and IoT microcontrollers. Default-deny rule back into internal RFC1918 subnets; untrusted devices restricted via explicit MAC drop loops. |
-| **VLAN 40** | `10.40.40.0/24`  | **GUEST_NET**   | Direct-to-WAN guest internet only. DHCP lease times compressed to 2 hours with client isolation enabled.                                                                         |
-| **VLAN 99** | `10.99.99.0/24`  | **STAGING**     | Sandboxed forensic/test laboratory for packet capturing untrusted containers and new images. Dropped from 100% of lateral internal network routes.                               |
+| VLAN ID     | Subnet CIDR     | Zone Purpose    | Isolation & Ingress/Egress Rules                                                                                                                                                 |
+| :---------- | :-------------- | :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **VLAN 1**  | `10.1.1.0/24`   | **OOB_MGMT**    | Air-gapped management network for Proxmox VE hypervisor web consoles, Unraid administration dashboards, and switch UI. Inaccessible from WAN or standard subnets.                |
+| **VLAN 10** | `10.10.10.0/24` | **APP_CORE**    | Core identity control plane hosting Authentik OIDC forward-auth engine, Vaultwarden password vault, and AdGuard Home DNS.                                                        |
+| **VLAN 20** | `10.20.20.0/24` | **TRUSTED_LAN** | Primary workstation access; tightly restricted dynamic scope (`.200-.220`) with static DHCP reservations for authorized physical nodes.                                          |
+| **VLAN 30** | `10.30.30.0/24` | **DMZ_MEDIA**   | High-throughput containerized media stack and transcode workloads on the Ryzen compute core.                                                                                     |
+| **VLAN 40** | `10.40.40.0/24` | **IOT_SMART**   | Home automation appliances, smart TVs, and IoT microcontrollers. Default-deny rule back into internal RFC1918 subnets; untrusted devices restricted via explicit MAC drop loops. |
+| **VLAN 50** | `10.50.50.0/24` | **GUEST_NET**   | Direct-to-WAN guest internet only. DHCP lease times compressed to 2 hours with client isolation enabled.                                                                         |
+| **VLAN 99** | `10.99.99.0/24` | **STAGING**     | Sandboxed forensic/test laboratory for packet capturing untrusted containers and new images. Dropped from 100% of lateral internal network routes.                               |
 
 ---
 
@@ -36,10 +36,10 @@ Routing and packet inspection are handled by an **Intel i3-N300** hardware node 
 The firewall applies a **Zero-Trust Default-Deny** model across all subnets:
 
 ```text
-[VLAN 30: IoT]   ──(BLOCKED)──> [VLAN 1, 2, 10, 20]
-[VLAN 40: Guest] ──(BLOCKED)──> [ALL INTERNAL RFC1918]
-[VLAN 99: Stage] ──(BLOCKED)──> [ALL INTERNAL RFC1918 (WAN Outbound Only)]
-[VLAN 1: Admin]  ──(ALLOW)────> [VLAN 2, 10, 20, 30] (Stateful inspection)
+[VLAN 40: IoT]    ──(BLOCKED)──> [VLAN 1, 10, 20, 30]
+[VLAN 50: Guest]  ──(BLOCKED)──> [ALL INTERNAL RFC1918]
+[VLAN 99: Stage]  ──(BLOCKED)──> [ALL INTERNAL RFC1918 (WAN Outbound Only)]
+[VLAN 20: Admin]  ──(ALLOW)────> [VLAN 1, 10, 30, 40] (Stateful return inspection)
 ```
 
 ---
