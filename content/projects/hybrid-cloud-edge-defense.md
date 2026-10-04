@@ -11,6 +11,7 @@ weight: 4
 
 Exposing residential IP addresses or opening inbound firewall ports introduces severe perimeter risks. This project details the design and deployment of an obfuscated edge architecture that enables secure public accessibility and zero-trust remote administration while keeping **100% of residential ingress ports closed**.
 
+```text
                                 [ Public Ingress / WAN ]
                                              │
                                              ▼
@@ -83,6 +84,7 @@ Exposing residential IP addresses or opening inbound firewall ports introduces s
         │ │ • Kopia Client (Automated daily snapshots to Backblaze B2)    │   │
         │ └───────────────────────────────────────────────────────────────┘   │
         └─────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -108,3 +110,14 @@ Dual-layered remote connectivity is enforced based on risk posture and device id
 1. **Hypervisor Data-Plane Orchestration:** Tailscale mesh overlay with Split DNS routing internal domains (`*brandonextra.com`) directly across the WireGuard transport layer.
 2. **Application-Level Micro-Segmentation:** Twingate ZTNA gateways deployed within container runtimes. Access policies enforce least-privilege resource assignments—remote devices access single IP:Port endpoints without granting network-wide Layer 3 subnet exposure.
 3. **Hardware Key Authentication:** Centralized Authentik Identity Provider (IdP) enforcing FIDO2/WebAuthn hardware security keys and OIDC claims before authorizing remote tunnels.
+
+---
+
+## 3. Production Automation & GitOps Tooling
+
+### OPNsense GitOps Configuration Sanitizer & Backup Runner
+
+To enforce state versioning, change audit trails, and automated disaster recovery for the perimeter firewall without exposing sensitive credentials, an automated Python GitOps pipeline queries the running OPNsense gateway via REST API. Before committing configuration diffs to Git, the engine scrubs cryptographic secrets, pre-shared keys, and password hashes, reporting execution telemetry to internal health monitors.
+
+- **GitHub Repository:** [`Brandex9/opnsense-git-backup`](https://github.com/Brandex9/opnsense-git-backup)
+- **Core Capabilities:** REST API config extraction (`/api/core/backup/download/this`), XML ElementTree credential redaction, Git drift detection, and automated Uptime Kuma heartbeat signals.

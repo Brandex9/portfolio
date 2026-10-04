@@ -92,3 +92,14 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
 
 - **Atomic Hardlinks:** Storage topology leverages a unified parent share (`/mnt/user/data/`), allowing Docker containers to execute instant 0ms hardlink pointer moves between download scratch disks and media libraries without invoking storage-bus write cycles.
 ```
+
+---
+
+## 3. Automation & Operational Tooling
+
+### Automated CIDR Subnet Refactoring Engine
+
+To execute the network-wide migration from legacy Class C ranges to the unified `10.VLAN.VLAN.x` schema without manual configuration errors or downtime, an operational automation tool was engineered in Python. It executes dry-run change simulations, atomic timestamped rollbacks, and boundary-checked regex refactors across all Docker Compose and `.env` stores.
+
+- **GitHub Repository:** [`Brandex9/cidr-subnet-migrator`](https://github.com/Brandex9/cidr-subnet-migrator)
+- **Core Capabilities:** Safe in-place file stream refactoring, regex boundary protections, timestamped `.bak` snapshot generation, and one-command disaster recovery rollback.
