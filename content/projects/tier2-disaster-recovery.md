@@ -4,7 +4,7 @@ date: 2026-09-30
 draft: false
 tags: ["Kopia", "Backblaze-B2", "Disaster-Recovery", "Docker", "DevOps"]
 summary: "Zero-plaintext container deployments paired with a two-tier backup pipeline utilizing local block snapshots and client-side encrypted Backblaze B2 offsite syncs."
-weight: 3
+weight: 6
 ---
 
 ## Engineering Overview
@@ -40,19 +40,18 @@ secrets:
     file: ./secrets/db_password.txt
 ```
 
-        ┌────────────────────────┐
-        │ Production Hypervisors │
-        └───────────┬────────────┘
-                    │
-          ┌─────────┴─────────┐
-          │Daily Sync Pipeline|
-          ▼                   ▼
-
-┌──────────────────┐ ┌───────────────────────────┐
-│ Tier 1: Fast PBS │ │ Tier 2: Encrypted Offsite │
-│ (Local ZFS SSD) │ │ (Kopia -> Backblaze B2) │
-└──────────────────┘ └───────────────────────────┘
-
+```yaml
+              ┌────────────────────────┐
+              │ Production Hypervisors │
+              └───────────┬────────────┘
+                          │
+                ┌─────────┴─────────┐
+                │Daily Sync Pipeline│
+                ▼                   ▼
+      ┌──────────────────┐ ┌───────────────────────────┐
+      │ Tier 1: Fast PBS │ │ Tier 2: Encrypted Offsite │
+      │ (Local ZFS SSD)  │ │ (Kopia -> Backblaze B2)   │
+      └──────────────────┘ └───────────────────────────┘
 ```
 
 ### Tier 1: Rapid Local Recovery
@@ -63,8 +62,9 @@ secrets:
 ### Tier 2: Offsite Catastrophic Recovery
 
 - **Mechanism:** Daily automated snapshots of mission-critical datasets (`/storage/photos`, cryptographic state files, application databases, and Git configs) processed via the Kopia Engine.
-- **Database Integrity:** Stateful transactional systems execute automated plaintext dumps to a staging directory prior to Kopia snapshot execution to prevent state corruption.
+- **Database Integrity:** Stateful transactional systems execute automated database dumps to a staging directory prior to Kopia snapshot execution to prevent state corruption.
 - **Client-Side Encryption:** End-to-end AES-256-GCM encryption is enforced locally before data leaves host memory.
 - **Target Bucket:** Scoped Backblaze B2 Cloud Object Storage (`extra-infra-backup-kopia-daily-us-east`).
 - **Bandwidth Optimization:** Bulk, replaceable media streams are programmatically excluded to mitigate cloud storage overhead and unexpected data egress costs.
-```
+
+---

@@ -18,7 +18,7 @@ A comprehensive detection and incident response pipeline designed to capture sus
 Traditional Fail2ban deployments suffer from isolated local visibility. This architecture leverages a **Hybrid CrowdSec IPS Engine**:
 
 - **Edge Log Acquisition:** CrowdSec parsers read real-time access logs from the OVHcloud edge proxy and home reverse proxy containers.
-- **Central LAPI Coordination:** Container parsers push alerts to a centralized CrowdSec Local API (LAPI) engine.
+- **Central LAPI Coordination:** Container parsers push alerts to a centralized CrowdSec Local API (LAPI) engine hosted in **APP_CORE (VLAN 10)**.
 - **Firewall Remediation Bouncers:** When brute-force attacks, port scans, or web exploit attempts are detected, the firewall bouncer injects temporary packet drop tables into OPNsense WAN rulesets—dropping malicious source IPs before packets traverse deeper into the network.
 
 ---
@@ -27,10 +27,10 @@ Traditional Fail2ban deployments suffer from isolated local visibility. This arc
 
 ### Protocol & Deep Packet Inspection
 
-- **Zenarmor Layer 7 DPI:** Classifies evasive TLS flows and analyzes payload metadata across internal subnets to detect lateral traversal attempts between VLAN 30 (IoT) and secure zones.
+- **Zenarmor Layer 7 DPI:** Classifies evasive TLS flows and analyzes payload metadata across internal subnets to detect lateral traversal attempts between **VLAN 40 (IoT)** or **VLAN 30 (DMZ)** and secure core zones (**VLAN 10 / VLAN 20**).
 - **Forensic Capture (TCPDump & Wireshark):** Automated packet capture scripts dump anomalous ingress flows matching specific TCP flags (SYN-flood patterns, non-standard TLS handshakes) into PCAP files for deep inspection in Wireshark.
 
 ### DNS Privacy & Tunnel Evasion
 
-- Standard plaintext DNS (port 53) is intercepted and redirected via OPNsense NAT port forwards.
+- Standard plaintext DNS (port 53) is intercepted and redirected via OPNsense NAT port forwards to AdGuard Home.
 - Upstream resolution uses **DNS-over-QUIC (DoQ)** to Control D, backed by **Oblivious DoH (ODoH)** failover relays, stripping metadata from upstream ISP logging.

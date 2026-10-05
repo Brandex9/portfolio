@@ -84,8 +84,8 @@
   "keywords": [
     "Zero-Trust", "ZTNA", "Twingate", "Tailscale", "Authentik", "WireGuard", "Networking"
   ],
-  "articleBody": "Executive Summary Deploying a single monolithic VPN introduces lateral movement risks and breaks non-technical user workflows. This deployment implements Intent-Based Access Control (IBAC), partitioning remote access into three isolated planes: application-level ZTNA for administration, automated hardware-level mesh routing for mobile travel, and dynamic IP-whitelisted edge proxying for consumer client hardware.\n1. Architectural Allocation Matrix Access Vector Technology Tier Target Scope Security Policy \u0026 Ingress Mechanics Consumer Application Ingress Pangolin + Authentik Media \u0026 Streaming Workloads (VLAN 30) Ingests native smart TV/client app requests without VPN clients. Authentik fires webhooks upon WebAuthn validation to dynamically whitelist consumer WAN IPs on Pangolin. Administrative Control Plane Twingate (ZTNA) Core Management (VLAN 10 \u0026 VLAN 1) Enforces micro-segmented, least-privilege resource mapping. Grants point-to-point socket access (e.g., 10.1.1.2:8006) without exposing Layer 3 subnets. Infrastructure Mesh Backhaul Tailscale Physical Node Interconnect Encrypted WireGuard overlay bridging remote hardware (GL.iNet Slate 7 Pro) to OPNsense via Subnet Routing and Split-Horizon DNS. 2. Ingress \u0026 Routing Topology [ THE PUBLIC WAN INTERNET ]\r│\r┌───────────────────────────────┼──────────────────────────────┐\r▼ (Public Web / Media Ingress) ▼ (ZTNA Admin Traffic) ▼ (Mesh Satellite Bridge)\r┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐\r│ Cloudflare Edge │ │ Twingate Relays │ │ Tailscale DERP Fleet │\r│ • DDoS/WAF Gating │ │ • Identity Brokered│ │ • Encrypted P2P Mesh │\r└──────────┬───────────┘ └──────────┬───────────┘ └──────────┬───────────┘\r│ (Port 443) │ │\r▼ │ (Direct Outbound Egress) │ (Direct Outbound Egress)\r┌──────────────────────┐ │ │\r│ OVHcloud VPS Edge │ │ │\r│ • Caddy L4/L7 SNI │ │ │\r│ • GeoIP / CrowdSec │ │ │\r└──────────┬───────────┘ │ │\r│ │ │\r│ (Outbound WireGuard /30) │ │\r▼ ▼ ▼\r┌─────────────────────────────── HOME FIREWALL BOUNDARY ────────────────────────────────────────┐\r│ │\r│ ┌───────────────────────────────────────────────────────────────────────────────────────┐ │\r│ │ VMID 100: OPNsense Core Gateway (Intel i3-N300 Node) │ │\r│ │ • Static Inbound WAN Ports: 0 OPEN (All Ingress Outbound-Initiated) │ │\r│ │ • Tailscale Subnet Router (Mesh Bridge to Travel Slate 7 Pro) │ │\r│ │ • Zenarmor Layer 7 DPI (Deep Packet Inspection on Inter-VLAN Traffic) │ │\r│ └──────────────────────────────────────────┬────────────────────────────────────────────┘ │\r└──────────────────────────────────────────────┼────────────────────────────────────────────────┘\r│ (802.1Q Trunk / 10G MikroTik CRS305 Spine)\r▼\r┌───────────────────────────────── COMPUTATION \u0026 CLUSTER FABRIC ────────────────────────────────┐\r│ │\r│ [ NODE 1: Intel i3-N300 Core ] │\r│ ┌─────────────────────────────── VMID 200: App Core Container (VLAN 10) ────────────────┐ │\r│ │ │ │\r│ │ ┌────────────────────────┐ ┌────────────────────────┐ │ │\r│ │ │ Authentik IdP Core │ │ Twingate Connector │ │ │\r│ │ │ • 10.10.10.10 │ │ • 10.10.10.20 │ │ │\r│ │ │ • WebAuthn / OIDC │ │ • Scoped Resource Broker │ │\r│ │ └───────────┬────────────┘ └────────────────────────┘ │ │\r│ └──────────────│────────────────────────────────────────────────────────────────────────┘ │\r│ │ │\r│ │ (Cross-VLAN Webhook Auth / Dynamic IP Allow) │\r│ ▼ │\r│ [ NODE 2: AMD Ryzen 5 Core ] │\r│ ┌──────────────┴──────────────── LXC 310: DMZ Media Cluster (VLAN 30) ──────────────────┐ │\r│ │ │ │\r│ │ ┌────────────────────────┐ ┌────────────────────────┐ │ │\r│ │ │ Pangolin Ingress Proxy │ │ Jellyfin Media Server │ │ │\r│ │ │ • 10.30.30.30 │──────────────────►│ • 10.30.30.40 │ │ │\r│ │ │ • Dynamic IP Whitelist │ (Local Stream) │ • Hardware NVENC Trans │ │ │\r│ │ └────────────────────────┘ └────────────────────────┘ │ │\r│ └───────────────────────────────────────────────────────────────────────────────────────┘ │\r└───────────────────────────────────────────────────────────────────────────────────────────────┘\r",
-  "wordCount" : "535",
+  "articleBody": "Executive Summary Deploying a single monolithic VPN introduces lateral movement risks and breaks non-technical user workflows. This deployment implements Intent-Based Access Control (IBAC), partitioning remote access into three isolated planes: application-level ZTNA for administration, automated hardware-level mesh routing for mobile travel, and dynamic IP-whitelisted edge proxying for consumer client hardware.\n1. Architectural Allocation Matrix Access Vector Technology Tier Target Scope Security Policy \u0026 Ingress Mechanics Consumer Application Ingress Pangolin + Authentik Media \u0026 Streaming Workloads (VLAN 30) Ingests native smart TV/client app requests without VPN clients. Authentik fires webhooks upon WebAuthn validation to dynamically whitelist consumer WAN IPs on Pangolin. Administrative Control Plane Twingate (ZTNA) Core Management (VLAN 10 \u0026 VLAN 1) Enforces micro-segmented, least-privilege resource mapping. Grants point-to-point socket access (e.g., 10.1.1.2:8006) without exposing Layer 3 subnets. Infrastructure Mesh Backhaul Tailscale Physical Node Interconnect Encrypted WireGuard overlay bridging remote hardware (GL.iNet Slate 7 Pro) to OPNsense via Subnet Routing and Split-Horizon DNS. 2. Ingress \u0026 Routing Topology [ THE PUBLIC WAN INTERNET ] │ ┌───────────────────────────────┼──────────────────────────────┐ ▼ (Public Web / Media Ingress) ▼ (ZTNA Admin Traffic) ▼ (Mesh Satellite Bridge) ┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐ │ Cloudflare Edge │ │ Twingate Relays │ │ Tailscale DERP Fleet │ │ • DDoS/WAF Gating │ │ • Identity Brokered│ │ • Encrypted P2P Mesh │ └──────────┬───────────┘ └──────────┬───────────┘ └──────────┬───────────┘ │ (Port 443) │ │ ▼ │ (Direct Outbound Egress) │ (Direct Outbound Egress) ┌──────────────────────┐ │ │ │ OVHcloud VPS Edge │ │ │ │ • Caddy L4/L7 SNI │ │ │ │ • GeoIP / CrowdSec │ │ │ └──────────┬───────────┘ │ │ │ │ │ │ (Outbound WireGuard /30) │ │ ▼ ▼ ▼ ┌─────────────────────────────── HOME FIREWALL BOUNDARY ────────────────────────────────────────┐ │ │ │ ┌───────────────────────────────────────────────────────────────────────────────────────┐ │ │ │ VMID 100: OPNsense Core Gateway (Intel i3-N300 Node) │ │ │ │ • Static Inbound WAN Ports: 0 OPEN (All Ingress Outbound-Initiated) │ │ │ │ • Tailscale Subnet Router (Mesh Bridge to Travel Slate 7 Pro) │ │ │ │ • Zenarmor Layer 7 DPI (Deep Packet Inspection on Inter-VLAN Traffic) │ │ │ └──────────────────────────────────────────┬────────────────────────────────────────────┘ │ └──────────────────────────────────────────────┼────────────────────────────────────────────────┘ │ (802.1Q Trunk / 10G MikroTik CRS305 Spine) ▼ ┌───────────────────────────────── COMPUTATION \u0026 CLUSTER FABRIC ────────────────────────────────┐ │ │ │ [ NODE 1: Intel i3-N300 Core ] │ │ ┌─────────────────────────────── VMID 200: App Core Container (VLAN 10) ────────────────┐ │ │ │ │ │ │ │ ┌────────────────────────┐ ┌────────────────────────┐ │ │ │ │ │ Authentik IdP Core │ │ Twingate Connector │ │ │ │ │ │ • 10.10.10.10 │ │ • 10.10.10.20 │ │ │ │ │ │ • WebAuthn / OIDC │ │ • Scoped Resource Broker │ │ │ │ └───────────┬────────────┘ └────────────────────────┘ │ │ │ └──────────────│────────────────────────────────────────────────────────────────────────┘ │ │ │ │ │ │ (Cross-VLAN Webhook Auth / Dynamic IP Allow) │ │ ▼ │ │ [ NODE 2: AMD Ryzen 5 Core ] │ │ ┌──────────────┴──────────────── LXC 310: DMZ Media Cluster (VLAN 30) ──────────────────┐ │ │ │ │ │ │ │ ┌────────────────────────┐ ┌────────────────────────┐ │ │ │ │ │ Pangolin Ingress Proxy │ │ Jellyfin Media Server │ │ │ │ │ │ • 10.30.30.30 │──────────────────►│ • 10.30.30.40 │ │ │ │ │ │ • Dynamic IP Whitelist │ (Local Stream) │ • Hardware NVENC Trans │ │ │ │ │ └────────────────────────┘ └────────────────────────┘ │ │ │ └───────────────────────────────────────────────────────────────────────────────────────┘ │ └───────────────────────────────────────────────────────────────────────────────────────────────┘ 3. Engineering Implementation Details Tier 1: Pangolin \u0026 Authentik Dynamic Webhook Gating Consumer smart TVs and streaming appliances cannot process interactive HTTP 302 redirects triggered by authentication forward proxies.\nPangolin runs isolated inside DMZ_MEDIA (VLAN 30) on the AMD Ryzen 5 compute node. When family members or mobile clients complete FIDO2/WebAuthn verification on their personal browser, an event-driven webhook executes an API call against Pangolin to dynamically whitelist the originating residential WAN IP for a 24-hour lease window. Tier 2: Twingate Least-Privilege Administrative Access The Twingate Connector is deployed as an unprivileged container in APP_CORE (VLAN 10). Point-to-point software-defined perimeters replace traditional Layer 3 VPN connections. Administrators connect exclusively to designated host:port definitions (e.g., 10.1.1.2:8006 for the Proxmox UI), preventing lateral discovery or network-wide port scans. Tier 3: Tailscale Mesh with GL.iNet Hardware Integration OPNsense on the Intel N300 runs Tailscale as a kernel-accelerated Subnet Router. A portable GL.iNet Slate 7 Pro travel router acts as a mobile satellite node configured on 10.150.1.0/24. Client devices connected to the mobile travel Wi-Fi automatically resolve internal DNS records (*brandonextra.com) through the secure mesh backhaul without per-device client software. 4. Production Automation \u0026 Code Artifacts Authentik-to-Pangolin Dynamic IP Synchronizer To bridge headless client devices with zero-trust forward authentication, a custom event-driven Python microservice integrates Authentik’s notification webhook bus directly with Pangolin’s REST API. When an authenticated user completes WebAuthn verification, the engine extracts the validated client WAN IP (stripping multi-hop proxy headers) and provisions a temporary whitelist lease on the media ingress proxy.\nGitHub Repository: Brandex9/authentik-pangolin-sync Core Capabilities: Upstream reverse-proxy header sanitization (CF-Connecting-IP, X-Forwarded-For), scoped API bearer token authentication, dynamic TTL lease management, and integrated health probes. ",
+  "wordCount" : "809",
   "inLanguage": "en",
   "datePublished": "2026-10-03T00:00:00Z",
   "dateModified": "2026-10-03T00:00:00Z",
@@ -176,7 +176,7 @@
     </h1>
     <div class="post-meta">
 
-<span title='2026-10-03 00:00:00 +0000 UTC'>October 3, 2026</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Brandon Extra</span>
+<span title='2026-10-03 00:00:00 +0000 UTC'>October 3, 2026</span>&nbsp;·&nbsp;<span>4 min</span>&nbsp;·&nbsp;<span>Brandon Extra</span>
 
 </div>
   </header> 
@@ -216,60 +216,85 @@
 </table>
 <hr>
 <h2 id="2-ingress--routing-topology">2. Ingress &amp; Routing Topology<a hidden class="anchor" aria-hidden="true" href="#2-ingress--routing-topology">#</a></h2>
-<pre><code>                                 [ THE PUBLIC WAN INTERNET ]
-                                                │
-                ┌───────────────────────────────┼──────────────────────────────┐
-                ▼ (Public Web / Media Ingress)  ▼ (ZTNA Admin Traffic)         ▼ (Mesh Satellite Bridge)
-     ┌──────────────────────┐        ┌──────────────────────┐       ┌──────────────────────┐
-     │   Cloudflare Edge    │        │   Twingate Relays    │       │ Tailscale DERP Fleet │
-     │   • DDoS/WAF Gating  │        │   • Identity Brokered│       │ • Encrypted P2P Mesh │
-     └──────────┬───────────┘        └──────────┬───────────┘       └──────────┬───────────┘
-                │ (Port 443)                    │                              │
-                ▼                               │ (Direct Outbound Egress)     │ (Direct Outbound Egress)
-     ┌──────────────────────┐                   │                              │
-     │  OVHcloud VPS Edge   │                   │                              │
-     │  • Caddy L4/L7 SNI   │                   │                              │
-     │  • GeoIP / CrowdSec  │                   │                              │
-     └──────────┬───────────┘                   │                              │
-                │                               │                              │
-                │ (Outbound WireGuard /30)      │                              │
-                ▼                               ▼                              ▼
- ┌─────────────────────────────── HOME FIREWALL BOUNDARY ────────────────────────────────────────┐
- │                                                                                               │
- │   ┌───────────────────────────────────────────────────────────────────────────────────────┐   │
- │   │ VMID 100: OPNsense Core Gateway (Intel i3-N300 Node)                                  │   │
- │   │  • Static Inbound WAN Ports: 0 OPEN (All Ingress Outbound-Initiated)                  │   │
- │   │  • Tailscale Subnet Router (Mesh Bridge to Travel Slate 7 Pro)                        │   │
- │   │  • Zenarmor Layer 7 DPI (Deep Packet Inspection on Inter-VLAN Traffic)                │   │
- │   └──────────────────────────────────────────┬────────────────────────────────────────────┘   │
- └──────────────────────────────────────────────┼────────────────────────────────────────────────┘
-                                                │ (802.1Q Trunk / 10G MikroTik CRS305 Spine)
-                                                ▼
- ┌───────────────────────────────── COMPUTATION &amp; CLUSTER FABRIC ────────────────────────────────┐
- │                                                                                               │
- │   [ NODE 1: Intel i3-N300 Core ]                                                              │
- │   ┌─────────────────────────────── VMID 200: App Core Container (VLAN 10) ────────────────┐   │
- │   │                                                                                       │   │
- │   │  ┌────────────────────────┐                   ┌────────────────────────┐              │   │
- │   │  │ Authentik IdP Core     │                   │ Twingate Connector     │              │   │
- │   │  │ • 10.10.10.10          │                   │ • 10.10.10.20          │              │   │
- │   │  │ • WebAuthn / OIDC      │                   │ • Scoped Resource Broker              │   │
- │   │  └───────────┬────────────┘                   └────────────────────────┘              │   │
- │   └──────────────│────────────────────────────────────────────────────────────────────────┘   │
- │                  │                                                                            │
- │                  │ (Cross-VLAN Webhook Auth / Dynamic IP Allow)                               │
- │                  ▼                                                                            │
- │   [ NODE 2: AMD Ryzen 5 Core ]                                                                │
- │   ┌──────────────┴──────────────── LXC 310: DMZ Media Cluster (VLAN 30) ──────────────────┐   │
- │   │                                                                                       │   │
- │   │  ┌────────────────────────┐                   ┌────────────────────────┐              │   │
- │   │  │ Pangolin Ingress Proxy │                   │ Jellyfin Media Server  │              │   │
- │   │  │ • 10.30.30.30          │──────────────────►│ • 10.30.30.40          │              │   │
- │   │  │ • Dynamic IP Whitelist │  (Local Stream)   │ • Hardware NVENC Trans │              │   │
- │   │  └────────────────────────┘                   └────────────────────────┘              │   │
- │   └───────────────────────────────────────────────────────────────────────────────────────┘   │
- └───────────────────────────────────────────────────────────────────────────────────────────────┘
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>                                     [ THE PUBLIC WAN INTERNET ]
+</span></span><span style="display:flex;"><span>                                                    │
+</span></span><span style="display:flex;"><span>                    ┌───────────────────────────────┼──────────────────────────────┐
+</span></span><span style="display:flex;"><span>                    ▼ (Public Web / Media Ingress)  ▼ (ZTNA Admin Traffic)         ▼ (Mesh Satellite Bridge)
+</span></span><span style="display:flex;"><span>         ┌──────────────────────┐        ┌──────────────────────┐       ┌──────────────────────┐
+</span></span><span style="display:flex;"><span>         │   Cloudflare Edge    │        │   Twingate Relays    │       │ Tailscale DERP Fleet │
+</span></span><span style="display:flex;"><span>         │   • DDoS/WAF Gating  │        │   • Identity Brokered│       │ • Encrypted P2P Mesh │
+</span></span><span style="display:flex;"><span>         └──────────┬───────────┘        └──────────┬───────────┘       └──────────┬───────────┘
+</span></span><span style="display:flex;"><span>                    │ (Port 443)                    │                              │
+</span></span><span style="display:flex;"><span>                    ▼                               │ (Direct Outbound Egress)     │ (Direct Outbound Egress)
+</span></span><span style="display:flex;"><span>         ┌──────────────────────┐                   │                              │
+</span></span><span style="display:flex;"><span>         │  OVHcloud VPS Edge   │                   │                              │
+</span></span><span style="display:flex;"><span>         │  • Caddy L4/L7 SNI   │                   │                              │
+</span></span><span style="display:flex;"><span>         │  • GeoIP / CrowdSec  │                   │                              │
+</span></span><span style="display:flex;"><span>         └──────────┬───────────┘                   │                              │
+</span></span><span style="display:flex;"><span>                    │                               │                              │
+</span></span><span style="display:flex;"><span>                    │ (Outbound WireGuard /30)      │                              │
+</span></span><span style="display:flex;"><span>                    ▼                               ▼                              ▼
+</span></span><span style="display:flex;"><span>     ┌─────────────────────────────── HOME FIREWALL BOUNDARY ────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>     │                                                                                               │
+</span></span><span style="display:flex;"><span>     │   ┌───────────────────────────────────────────────────────────────────────────────────────┐   │
+</span></span><span style="display:flex;"><span>     │   │ VMID 100: OPNsense Core Gateway (Intel i3-N300 Node)                                  │   │
+</span></span><span style="display:flex;"><span>     │   │  • Static Inbound WAN Ports: 0 OPEN (All Ingress Outbound-Initiated)                  │   │
+</span></span><span style="display:flex;"><span>     │   │  • Tailscale Subnet Router (Mesh Bridge to Travel Slate 7 Pro)                        │   │
+</span></span><span style="display:flex;"><span>     │   │  • Zenarmor Layer 7 DPI (Deep Packet Inspection on Inter-VLAN Traffic)                │   │
+</span></span><span style="display:flex;"><span>     │   └──────────────────────────────────────────┬────────────────────────────────────────────┘   │
+</span></span><span style="display:flex;"><span>     └──────────────────────────────────────────────┼────────────────────────────────────────────────┘
+</span></span><span style="display:flex;"><span>                                                    │ (802.1Q Trunk / 10G MikroTik CRS305 Spine)
+</span></span><span style="display:flex;"><span>                                                    ▼
+</span></span><span style="display:flex;"><span>     ┌───────────────────────────────── COMPUTATION &amp; CLUSTER FABRIC ────────────────────────────────┐
+</span></span><span style="display:flex;"><span>     │                                                                                               │
+</span></span><span style="display:flex;"><span>     │   [ NODE 1: Intel i3-N300 Core ]                                                              │
+</span></span><span style="display:flex;"><span>     │   ┌─────────────────────────────── VMID 200: App Core Container (VLAN 10) ────────────────┐   │
+</span></span><span style="display:flex;"><span>     │   │                                                                                       │   │
+</span></span><span style="display:flex;"><span>     │   │  ┌────────────────────────┐                   ┌────────────────────────┐              │   │
+</span></span><span style="display:flex;"><span>     │   │  │ Authentik IdP Core     │                   │ Twingate Connector     │              │   │
+</span></span><span style="display:flex;"><span>     │   │  │ • 10.10.10.10          │                   │ • 10.10.10.20          │              │   │
+</span></span><span style="display:flex;"><span>     │   │  │ • WebAuthn / OIDC      │                   │ • Scoped Resource Broker              │   │
+</span></span><span style="display:flex;"><span>     │   │  └───────────┬────────────┘                   └────────────────────────┘              │   │
+</span></span><span style="display:flex;"><span>     │   └──────────────│────────────────────────────────────────────────────────────────────────┘   │
+</span></span><span style="display:flex;"><span>     │                  │                                                                            │
+</span></span><span style="display:flex;"><span>     │                  │ (Cross-VLAN Webhook Auth / Dynamic IP Allow)                               │
+</span></span><span style="display:flex;"><span>     │                  ▼                                                                            │
+</span></span><span style="display:flex;"><span>     │   [ NODE 2: AMD Ryzen 5 Core ]                                                                │
+</span></span><span style="display:flex;"><span>     │   ┌──────────────┴──────────────── LXC 310: DMZ Media Cluster (VLAN 30) ──────────────────┐   │
+</span></span><span style="display:flex;"><span>     │   │                                                                                       │   │
+</span></span><span style="display:flex;"><span>     │   │  ┌────────────────────────┐                   ┌────────────────────────┐              │   │
+</span></span><span style="display:flex;"><span>     │   │  │ Pangolin Ingress Proxy │                   │ Jellyfin Media Server  │              │   │
+</span></span><span style="display:flex;"><span>     │   │  │ • 10.30.30.30          │──────────────────►│ • 10.30.30.40          │              │   │
+</span></span><span style="display:flex;"><span>     │   │  │ • Dynamic IP Whitelist │  (Local Stream)   │ • Hardware NVENC Trans │              │   │
+</span></span><span style="display:flex;"><span>     │   │  └────────────────────────┘                   └────────────────────────┘              │   │
+</span></span><span style="display:flex;"><span>     │   └───────────────────────────────────────────────────────────────────────────────────────┘   │
+</span></span><span style="display:flex;"><span>     └───────────────────────────────────────────────────────────────────────────────────────────────┘
+</span></span></code></pre></div><hr>
+<h2 id="3-engineering-implementation-details">3. Engineering Implementation Details<a hidden class="anchor" aria-hidden="true" href="#3-engineering-implementation-details">#</a></h2>
+<h3 id="tier-1-pangolin--authentik-dynamic-webhook-gating">Tier 1: Pangolin &amp; Authentik Dynamic Webhook Gating<a hidden class="anchor" aria-hidden="true" href="#tier-1-pangolin--authentik-dynamic-webhook-gating">#</a></h3>
+<p>Consumer smart TVs and streaming appliances cannot process interactive HTTP 302 redirects triggered by authentication forward proxies.</p>
+<ul>
+<li>Pangolin runs isolated inside <strong>DMZ_MEDIA (VLAN 30)</strong> on the AMD Ryzen 5 compute node.</li>
+<li>When family members or mobile clients complete FIDO2/WebAuthn verification on their personal browser, an event-driven webhook executes an API call against Pangolin to dynamically whitelist the originating residential WAN IP for a 24-hour lease window.</li>
+</ul>
+<h3 id="tier-2-twingate-least-privilege-administrative-access">Tier 2: Twingate Least-Privilege Administrative Access<a hidden class="anchor" aria-hidden="true" href="#tier-2-twingate-least-privilege-administrative-access">#</a></h3>
+<ul>
+<li>The Twingate Connector is deployed as an unprivileged container in <strong>APP_CORE (VLAN 10)</strong>.</li>
+<li>Point-to-point software-defined perimeters replace traditional Layer 3 VPN connections. Administrators connect exclusively to designated host:port definitions (e.g., <code>10.1.1.2:8006</code> for the Proxmox UI), preventing lateral discovery or network-wide port scans.</li>
+</ul>
+<h3 id="tier-3-tailscale-mesh-with-glinet-hardware-integration">Tier 3: Tailscale Mesh with GL.iNet Hardware Integration<a hidden class="anchor" aria-hidden="true" href="#tier-3-tailscale-mesh-with-glinet-hardware-integration">#</a></h3>
+<ul>
+<li>OPNsense on the Intel N300 runs Tailscale as a kernel-accelerated Subnet Router.</li>
+<li>A portable <strong>GL.iNet Slate 7 Pro</strong> travel router acts as a mobile satellite node configured on <code>10.150.1.0/24</code>. Client devices connected to the mobile travel Wi-Fi automatically resolve internal DNS records (<code>*brandonextra.com</code>) through the secure mesh backhaul without per-device client software.</li>
+</ul>
+<hr>
+<h2 id="4-production-automation--code-artifacts">4. Production Automation &amp; Code Artifacts<a hidden class="anchor" aria-hidden="true" href="#4-production-automation--code-artifacts">#</a></h2>
+<h3 id="authentik-to-pangolin-dynamic-ip-synchronizer">Authentik-to-Pangolin Dynamic IP Synchronizer<a hidden class="anchor" aria-hidden="true" href="#authentik-to-pangolin-dynamic-ip-synchronizer">#</a></h3>
+<p>To bridge headless client devices with zero-trust forward authentication, a custom event-driven Python microservice integrates Authentik&rsquo;s notification webhook bus directly with Pangolin&rsquo;s REST API. When an authenticated user completes WebAuthn verification, the engine extracts the validated client WAN IP (stripping multi-hop proxy headers) and provisions a temporary whitelist lease on the media ingress proxy.</p>
+<ul>
+<li><strong>GitHub Repository:</strong> <a href="https://github.com/Brandex9/authentik-pangolin-sync"><code>Brandex9/authentik-pangolin-sync</code></a></li>
+<li><strong>Core Capabilities:</strong> Upstream reverse-proxy header sanitization (<code>CF-Connecting-IP</code>, <code>X-Forwarded-For</code>), scoped API bearer token authentication, dynamic TTL lease management, and integrated health probes.</li>
+</ul>
 
 
   </div>

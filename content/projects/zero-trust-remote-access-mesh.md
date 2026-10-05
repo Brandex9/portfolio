@@ -111,6 +111,26 @@ Consumer smart TVs and streaming appliances cannot process interactive HTTP 302 
 - OPNsense on the Intel N300 runs Tailscale as a kernel-accelerated Subnet Router.
 - A portable **GL.iNet Slate 7 Pro** travel router acts as a mobile satellite node configured on `10.150.1.0/24`. Client devices connected to the mobile travel Wi-Fi automatically resolve internal DNS records (`*brandonextra.com`) through the secure mesh backhaul without per-device client software.
 
+### Tier 4: Internal Metasearch Microsegmentation (SearXNG)
+
+Publicly exposing self-hosted metasearch instances (e.g., SearXNG) creates immediate operational issues: search engine scrapers and botnets saturate upstream quotas, prompting search providers (Google, Bing, Brave) to flag the public IP with persistent reCAPTCHAs and rate limits.
+
+To eliminate public exposure while retaining native search engine integration across managed devices, SearXNG is isolated under an **Intent-Based Access Control (IBAC)** model:
+
+```text
+  [ Admin Workstation / Mobile Browser ]
+                     │
+                     ▼ (Encrypted ZTNA Tunnel Request)
+           [ Twingate Client Agent ]
+                     │
+                     ▼ (Point-to-Point Socket Authorization)
+           [ Twingate Connector ] ──► [ SearXNG Container ]
+             (App Core: VLAN 10)         (App Core: 10.10.10.35:8080)
+                                                 │
+                                                 ▼ (Policy Route: Residential WAN Egress)
+                                         [ OPNsense Core Gateway ]
+```
+
 ---
 
 ## 4. Production Automation & Code Artifacts
