@@ -15,7 +15,7 @@ Transitioned an unmanaged flat consumer network into an enterprise-grade private
 
 ## 1. Network Topology & Addressing Schema
 
-Routing and packet inspection are handled by an **Intel i3-N300** hardware node running a virtualized **OPNsense Core Router (VMID 100)** over 4x Intel i226-V 2.5GbE interfaces, connected to a **TP-Link Omada SG2210XMP-M2** managed 2.5G PoE+ switch.
+Routing and packet inspection are handled by an **Intel 8505** hardware node running a virtualized **OPNsense Core Router (VMID 100)** over 4x Intel i226-V 2.5GbE interfaces, connected to a **TP-Link Omada SG2210XMP-M2** managed 2.5G PoE+ switch.
 
 | VLAN ID     | Subnet CIDR     | Zone Purpose    | Isolation & Ingress/Egress Rules                                                                                                                                                 |
 | :---------- | :-------------- | :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,7 +66,7 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
 
 ## 1. Node Topology & Workload Segmentation
 
-### Node 1: Intel i3-N300 Gateway Core [VMID 100 - 299]
+### Node 1: Intel 8505 Gateway Core [VMID 100 - 299]
 
 - **Compute:** 8C/8T low-power Gracemont architecture, 16GB Crucial DDR5 4800MHz, Samsung PM9A1 NVMe.
 - **VMID 100 (OPNsense Router):** 8GB RAM pinned; manages Zenarmor Layer 7 DPI in-memory databases and multi-VLAN policy routing.

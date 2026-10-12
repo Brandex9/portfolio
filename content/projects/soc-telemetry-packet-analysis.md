@@ -4,7 +4,7 @@ date: 2026-09-30
 draft: false
 tags: ["CrowdSec", "Wireshark", "TCPDump", "Splunk", "DPI", "SIEM"]
 summary: "Implementing a hybrid CrowdSec IPS and log analysis pipeline across edge proxies and hypervisors to detect, analyze, and drop malicious traffic flows."
-weight: 5
+weight: 6
 ---
 
 ## Overview

@@ -4,7 +4,7 @@ date: 2026-09-30
 draft: false
 tags: ["Zero-Trust", "WireGuard", "Cloudflare", "Caddy", "ZTNA", "Security"]
 summary: "Architecting an obfuscated edge perimeter using a stateless OVHcloud VPS, Caddy Layer 4 filtering, MaxMind GeoIP gating, and a kernel-level WireGuard transit pipe."
-weight: 4
+weight: 5
 ---
 
 ## Executive Summary
@@ -45,7 +45,7 @@ Exposing residential IP addresses or opening inbound firewall ports introduces s
     (Zero Home Ports) |                      │ │ (Keepalive = 25s)
                       |                      │ ▼
         ┌─────────────┴───────────────────────────────────────────────────────┐
-        │ Home Perimeter: Intel i3-N300 Core                                  │
+        │ Home Perimeter: Intel 8505 Core                                  │
         │ (Bare-Metal Proxmox VE + Beszel Agent)                              │
         │                                                                     │
         │ ┌───────────────────────────────────────────────────────────────┐   │
@@ -98,7 +98,7 @@ Exposing residential IP addresses or opening inbound firewall ports introduces s
 
 ### Outbound-Initiated `/30` WireGuard Transit Tunnel
 
-- Rather than the VPS initiating connections into the home network, the home Intel N300 OPNsense gateway opens an **outbound-initiated kernel-level WireGuard session** to the VPS.
+- Rather than the VPS initiating connections into the home network, the home Intel 8505 OPNsense gateway opens an **outbound-initiated kernel-level WireGuard session** to the VPS.
 - Configured as a tightly scoped `/30` point-to-point transit link. In OPNsense, firewall rules explicitly drop any connection attempts originating from the VPS subnet that target hypervisor management planes (VLAN 2) or secure client workstations (VLAN 1).
 
 ---

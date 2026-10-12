@@ -8,7 +8,7 @@ summary: "A production-grade homelab architecture implementing a 6-VLAN network 
 
 ## Architectural Overview
 
-Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel i3-N300 OPNsense core router and a TP-Link Omada 2.5G managed switch.
+Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel 8505 OPNsense core router and a TP-Link Omada 2.5G managed switch.
 
 ### Key Implementation Highlights
 

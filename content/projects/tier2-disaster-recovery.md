@@ -4,7 +4,7 @@ date: 2026-09-30
 draft: false
 tags: ["Kopia", "Backblaze-B2", "Disaster-Recovery", "Docker", "DevOps"]
 summary: "Zero-plaintext container deployments paired with a two-tier backup pipeline utilizing local block snapshots and client-side encrypted Backblaze B2 offsite syncs."
-weight: 6
+weight: 7
 ---
 
 ## Engineering Overview
@@ -67,4 +67,6 @@ secrets:
 - **Target Bucket:** Scoped Backblaze B2 Cloud Object Storage (`extra-infra-backup-kopia-daily-us-east`).
 - **Bandwidth Optimization:** Bulk, replaceable media streams are programmatically excluded to mitigate cloud storage overhead and unexpected data egress costs.
 
----
+### Future Plans
+
+- **Next-Phase Hardening:** Transitioning from local file-based Docker secrets (`chmod 600`) to centralized, dynamic runtime secret injection using a self-hosted Infisical cluster in **VLAN 10** brokered via Universal Auth Machine Identities..

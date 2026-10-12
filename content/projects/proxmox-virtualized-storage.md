@@ -17,7 +17,7 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
                                    │
                                    ▼ (Raw 1Gbps Fiber Line)
                     ┌───────────────────────────────┐
-                    │      Intel i3-N300 Core       │
+                    │      Intel 8505 Core          │
                     │                               │
                     │ • SFP+ Port 1: 1G WAN Bypass  │
                     │   └─ SFP GPON ONT Stick       │
@@ -29,13 +29,14 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
                                    │
                                    ▼ (10G SFP+ Direct Attach Copper)
                     ┌───────────────────────────────┐
-                    │   MikroTik CRS305-1G-4S+IN    │
-                    │   (10G SFP+ Storage/Core Spine)│
-                    │   • eth1: Mgmt PoE-In (VLAN 1)│
+                    │   MikroTik CRS310-1G-5S-4S+IN │
+                    │  (10G SFP+ Storage/Core Spine)│
+                    │   • eth1: Mgmt PoE-In (VLAN 1)|
+                    │   • 5 x 1GSPF: printers,tv,mis|
                     │   • SFP+ 1: 10G Router Uplink │
                     │   • SFP+ 2: High-Speed NAS    │
-                    │   • SFP+ 3: Omada EAP773 AP   │
-                    │   • SFP+ 4: Omada Switch Trunk│
+                    │   • SFP+ 3: Omada Switch Trunk│
+                    │   • SFP+ 4: Free
                     └───────┬───────┬───────┬───────┘
                             │       │       │
        (10G SFP+ DAC) ──────┘       │       └─────► (10G SFP+ DAC Trunk)
@@ -55,7 +56,7 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
 
 ## 1. Node Topology & Workload Segmentation
 
-### Node 1: Intel i3-N300 Gateway Core [VMID 100 - 299]
+### Node 1: Intel 8505 Gateway Core [VMID 100 - 299]
 
 - **Compute:** 8C/8T low-power Gracemont architecture, 16GB Crucial DDR5 4800MHz, Samsung PM9A1 NVMe SSD.
 - **VMID 100 (OPNsense Router):** 8GB RAM pinned; manages Zenarmor Layer 7 DPI in-memory databases, multi-VLAN policy routing, and outbound GeoIP enforcement.
@@ -65,7 +66,7 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
 
 - **Compute:** AMD Ryzen 5 3600 (6C/12T), ASRock B550M Pro4, 32GB/64GB DDR4 RAM.
 - **Local Hypervisor Tier:** Proxmox VE installed across 2x Intel DC S3500 Enterprise SSDs in a mirrored ZFS pool.
-- **Storage Interconnect:** Mellanox ConnectX-3 10G SFP+ linked via DAC Twinax to the MikroTik CRS305 core.
+- **Storage Interconnect:** Mellanox ConnectX-3 10G SFP+ linked via DAC Twinax to the MikroTik CRS310 core.
 - **VMID 300 (Unraid VM):** Direct PCIe IOMMU passthrough of an **LSI Broadcom SAS 9211-8i HBA Card (IT-Mode)** managing mechanical hard drives alongside a dedicated NVMe SSD cache tier.
 - **LXC 310 (DMZ Media):** Unprivileged container with direct NVIDIA GeForce GTX 1660 `/dev/dri` passthrough for hardware-accelerated NVENC transcode pipelines.
 - **LXC 320 (NOC Telemetry):** Aggregates metric collectors including Prometheus, Grafana Loki, and visual command panels.
@@ -82,7 +83,7 @@ A purpose-built hybrid hypervisor architecture running Proxmox VE, combining hig
 
 To eliminate network bottlenecks during backup jobs and real-time transcode ingestion, the switching plane is bifurcated:
 
-- **Core Storage Spine (MikroTik CRS305-1G-4S+IN):** Dedicated 10G SFP+ Layer 2 fabric offloading array traffic, local ZFS replication, and high-speed NVMe scratch syncs.
+- **Core Storage Spine (MikroTik CRS310-1G-5S-4S+IN):** Dedicated 10G SFP+ Layer 2 fabric offloading array traffic, local ZFS replication, and high-speed NVMe scratch syncs.
 - **PoE Out-of-Band Powering:** The MikroTik is powered via 802.3af/at PoE-in directly from the Omada switch, keeping the 10G spine tied to the primary UPS battery bus.
 
 ---
