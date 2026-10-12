@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane | Brandon Extra | Security &amp; Systems Architecture</title>
+<meta name="keywords" content="Networking, DNS, AdGuard-Home, Control-D, OPNsense, Zero-Trust, Infrastructure">
+<meta name="description" content="Architecting a high-performance DNS-over-QUIC (DoQ) pipeline that strips residential IP footprints and eliminates recursive multi-binary context overhead.">
+<meta name="author" content="Brandon Extra">
+<link rel="canonical" href="http://localhost:1313/projects/decoupled-dns-architecture/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/projects/decoupled-dns-architecture/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="http://localhost:1313/projects/decoupled-dns-architecture/">
+  <meta property="og:site_name" content="Brandon Extra | Security & Systems Architecture">
+  <meta property="og:title" content="Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane">
+  <meta property="og:description" content="Architecting a high-performance DNS-over-QUIC (DoQ) pipeline that strips residential IP footprints and eliminates recursive multi-binary context overhead.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="article:published_time" content="2026-10-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-10-09T00:00:00+00:00">
+    <meta property="article:tag" content="Networking">
+    <meta property="article:tag" content="DNS">
+    <meta property="article:tag" content="AdGuard-Home">
+    <meta property="article:tag" content="Control-D">
+    <meta property="article:tag" content="OPNsense">
+    <meta property="article:tag" content="Zero-Trust">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane">
+  <meta name="twitter:description" content="Architecting a high-performance DNS-over-QUIC (DoQ) pipeline that strips residential IP footprints and eliminates recursive multi-binary context overhead.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Engineering Projects \u0026 Systems Architecture",
+      "item": "http://localhost:1313/projects/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane",
+      "item": "http://localhost:1313/projects/decoupled-dns-architecture/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane",
+  "name": "Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane",
+  "description": "Architecting a high-performance DNS-over-QUIC (DoQ) pipeline that strips residential IP footprints and eliminates recursive multi-binary context overhead.",
+  "keywords": [
+    "Networking", "DNS", "AdGuard-Home", "Control-D", "OPNsense", "Zero-Trust", "Infrastructure"
+  ],
+  "articleBody": "Executive Summary Chained local recursive resolvers (e.g., Pi-hole looped into Unbound instances) introduce processing redundancies, application-layer context-switching latency, and flash storage write saturation.\nThis deployment implements a decoupled, high-frequency DNS-over-QUIC (DoQ) architecture. Local regex filtering and master RAM caching are consolidated within an AdGuard Home container, while cache misses route directly into a native Control D daemon (ctrld) on the core gateway. Upstream queries are cryptographically sealed with TLS 1.3 over UDP and routed across a kernel-level WireGuard tunnel to a stateless OVHcloud edge VPS, ensuring public Anycast resolvers never correlate residential IP identities with user query streams.\n1. Streamlined Wirespeed Transit Pipeline Rather than passing DNS queries through a convoluted multi-hop resolver chain, this architecture flattens the local resolving fabric into a non-blocking 3-step wirespeed data plane:\n[ Local Client Workstation ] │ ▼ (Port 53 / Local Network Segment) ┌────────────────────────────────────────────────────────┐ │ 1. AdGuard Home Container (VLAN 10: APP_CORE) │ │ • Master Ad/Malware Regex Filtering Plane │ │ • MASTER CACHE: Enforces 1-Hour Prefetch Tables │ └──────────────┬─────────────────────────────────────────┘ │ (Cache Misses: Forwarded down VLAN trunk) ▼ ┌────────────────────────────────────────────────────────┐ │ 2. Control D Proxy Daemon (ctrld running on OPNsense) │ │ • Ingests raw UDP stream on OPNsense Port 5354 │ │ • Packages query directly into DNS-over-QUIC (DoQ) │ └──────────────┬─────────────────────────────────────────┘ │ ▼ (OPNsense Policy Route forces packet into Tunnel) ┌────────────────────────────────────────────────────────┐ │ 3. Kernel-Level WireGuard Tunnel Interface │ │ • Hardened Link MTU Clamped to 1420 bytes │ └──────────────┬─────────────────────────────────────────┘ │ ▼ (Traverses Public WAN completely masked) ┌────────────────────────────────────────────────────────┐ │ 4. OVHcloud VPS Edge ➔ Outbound DoQ to Control D │ │ • Decapsulate WireGuard ➔ Forwards request(Port853)│ │ • Identity fully decoupled via cloud IP footprint │ └────────────────────────────────────────────────────────┘ 2. Infrastructure Interface \u0026 Addressing Profile To guarantee consistent log parsing and automated configuration mapping across the hypervisor fabric, the data plane is harmonized under a deterministic 10.VLAN.VLAN.X schema:\nInfrastructure Component Network Segment Static IP Mapping Primary Operational Mandate AdGuard Home Node VLAN 10 (APP_CORE) 10.10.10.15 Local LAN Port 53 listener; handles regex tables and RAM cache lookups. OPNsense Gateway Core Firewall Interface 10.10.10.1 Gateway router; accepts cache misses from AdGuard on port 5354. Control D Daemon Local Service Engine 127.0.0.1:5354 Native ctrld binary converting UDP frames into secure DoQ streams. WireGuard Transit Point-to-Point Tunnel 10.99.99.2/30 Kernel-level encrypted pipe bound to stateless Canada East cloud VPS. 3. Cryptographic Protocol Engineering: The DoQ Advantage Traditional encrypted transport protocols like DNS-over-TLS (DoT) and DNS-over-HTTPS (DoH) run atop TCP, introducing multi-step handshake latency and Head-of-Line (HoL) Blocking—where a single dropped packet stalls all subsequent queries in the queue.\nThis architecture standardizes all upstream transit on native DNS-over-QUIC (DoQ) on Port 853, pointing directly to Control D’s Anycast infrastructure:\nSymmetric 1-RTT Handshakes: Operating natively over UDP, QUIC merges TLS 1.3 cryptographic negotiation and transport initialization into a single round trip, dropping cold lookup times to ~12ms. Connection Migration Resiliency: Roaming endpoints traversing through the GL.iNet Slate 7 Pro travel router maintain active DNS sessions across hotel Wi-Fi and cellular failovers without renegotiation loops. Tunnel MTU Hardening: To eliminate packet drops and IP fragmentation inside the WireGuard tunnel, the interface MTU is clamped to 1420 bytes, ensuring large DNS responses fit cleanly within the transport envelope. 4. Hardware Offloading \u0026 Storage Endurance High-frequency query logging across dozens of home IoT and media endpoints causes severe write amplification on boot storage. To protect the Pentium Gold 8505 appliance SSDs, a multi-tiered quarantine policy is enforced:\nVolatile Caching: AdGuard Home query logging is restricted to a 24-hour circular buffer retained purely within volatile system RAM. Telemetry Decoupling: Long-term analytics are extracted via Prometheus and Loki collectors, compressed into time-series blocks, and stored on an isolated secondary storage pool. Encrypted Snapshot Shipping: Transactional metric blocks are cataloged nightly by the Kopia backup engine, encrypted via client-side AES-256-GCM, and pushed to Backblaze B2 object storage. ",
+  "wordCount" : "632",
+  "inLanguage": "en",
+  "datePublished": "2026-10-09T00:00:00Z",
+  "dateModified": "2026-10-09T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Brandon Extra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/projects/decoupled-dns-architecture/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brandon Extra | Security \u0026 Systems Architecture",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Brandon Extra | Security &amp; Systems Architecture (Alt + H)">Brandon Extra | Security &amp; Systems Architecture</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/projects/">Engineering Projects &amp; Systems Architecture</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-10-09 00:00:00 +0000 UTC'>October 9, 2026</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Brandon Extra</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="executive-summary">Executive Summary<a hidden class="anchor" aria-hidden="true" href="#executive-summary">#</a></h2>
+<p>Chained local recursive resolvers (e.g., Pi-hole looped into Unbound instances) introduce processing redundancies, application-layer context-switching latency, and flash storage write saturation.</p>
+<p>This deployment implements a decoupled, high-frequency <strong>DNS-over-QUIC (DoQ)</strong> architecture. Local regex filtering and master RAM caching are consolidated within an AdGuard Home container, while cache misses route directly into a native Control D daemon (<code>ctrld</code>) on the core gateway. Upstream queries are cryptographically sealed with TLS 1.3 over UDP and routed across a kernel-level WireGuard tunnel to a stateless OVHcloud edge VPS, ensuring public Anycast resolvers never correlate residential IP identities with user query streams.</p>
+<hr>
+<h2 id="1-streamlined-wirespeed-transit-pipeline">1. Streamlined Wirespeed Transit Pipeline<a hidden class="anchor" aria-hidden="true" href="#1-streamlined-wirespeed-transit-pipeline">#</a></h2>
+<p>Rather than passing DNS queries through a convoluted multi-hop resolver chain, this architecture flattens the local resolving fabric into a non-blocking <strong>3-step wirespeed data plane</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span> [ Local Client Workstation ]
+</span></span><span style="display:flex;"><span>                │
+</span></span><span style="display:flex;"><span>                ▼ (Port 53 / Local Network Segment)
+</span></span><span style="display:flex;"><span>┌────────────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ 1. AdGuard Home Container (VLAN 10: APP_CORE)          │
+</span></span><span style="display:flex;"><span>│    • Master Ad/Malware Regex Filtering Plane           │
+</span></span><span style="display:flex;"><span>│    • MASTER CACHE: Enforces 1-Hour Prefetch Tables     │
+</span></span><span style="display:flex;"><span>└──────────────┬─────────────────────────────────────────┘
+</span></span><span style="display:flex;"><span>               │ (Cache Misses: Forwarded down VLAN trunk)
+</span></span><span style="display:flex;"><span>               ▼
+</span></span><span style="display:flex;"><span>┌────────────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ 2. Control D Proxy Daemon (ctrld running on OPNsense)  │
+</span></span><span style="display:flex;"><span>│    • Ingests raw UDP stream on OPNsense Port 5354      │
+</span></span><span style="display:flex;"><span>│    • Packages query directly into DNS-over-QUIC (DoQ)  │
+</span></span><span style="display:flex;"><span>└──────────────┬─────────────────────────────────────────┘
+</span></span><span style="display:flex;"><span>               │
+</span></span><span style="display:flex;"><span>               ▼ (OPNsense Policy Route forces packet into Tunnel)
+</span></span><span style="display:flex;"><span>┌────────────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ 3. Kernel-Level WireGuard Tunnel Interface             │
+</span></span><span style="display:flex;"><span>│    • Hardened Link MTU Clamped to 1420 bytes           │
+</span></span><span style="display:flex;"><span>└──────────────┬─────────────────────────────────────────┘
+</span></span><span style="display:flex;"><span>               │
+</span></span><span style="display:flex;"><span>               ▼ (Traverses Public WAN completely masked)
+</span></span><span style="display:flex;"><span>┌────────────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ 4. OVHcloud VPS Edge ➔ Outbound DoQ to Control D      │
+</span></span><span style="display:flex;"><span>│    • Decapsulate WireGuard ➔ Forwards request(Port853)│
+</span></span><span style="display:flex;"><span>│    • Identity fully decoupled via cloud IP footprint   │
+</span></span><span style="display:flex;"><span>└────────────────────────────────────────────────────────┘
+</span></span></code></pre></div><hr>
+<h2 id="2-infrastructure-interface--addressing-profile">2. Infrastructure Interface &amp; Addressing Profile<a hidden class="anchor" aria-hidden="true" href="#2-infrastructure-interface--addressing-profile">#</a></h2>
+<p>To guarantee consistent log parsing and automated configuration mapping across the hypervisor fabric, the data plane is harmonized under a deterministic <strong><code>10.VLAN.VLAN.X</code></strong> schema:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Infrastructure Component</th>
+					<th style="text-align: left">Network Segment</th>
+					<th style="text-align: left">Static IP Mapping</th>
+					<th style="text-align: left">Primary Operational Mandate</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>AdGuard Home Node</strong></td>
+					<td style="text-align: left"><code>VLAN 10</code> (APP_CORE)</td>
+					<td style="text-align: left"><code>10.10.10.15</code></td>
+					<td style="text-align: left">Local LAN Port 53 listener; handles regex tables and RAM cache lookups.</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>OPNsense Gateway</strong></td>
+					<td style="text-align: left">Core Firewall Interface</td>
+					<td style="text-align: left"><code>10.10.10.1</code></td>
+					<td style="text-align: left">Gateway router; accepts cache misses from AdGuard on port 5354.</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Control D Daemon</strong></td>
+					<td style="text-align: left">Local Service Engine</td>
+					<td style="text-align: left"><code>127.0.0.1:5354</code></td>
+					<td style="text-align: left">Native <code>ctrld</code> binary converting UDP frames into secure DoQ streams.</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>WireGuard Transit</strong></td>
+					<td style="text-align: left">Point-to-Point Tunnel</td>
+					<td style="text-align: left"><code>10.99.99.2/30</code></td>
+					<td style="text-align: left">Kernel-level encrypted pipe bound to stateless Canada East cloud VPS.</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="3-cryptographic-protocol-engineering-the-doq-advantage">3. Cryptographic Protocol Engineering: The DoQ Advantage<a hidden class="anchor" aria-hidden="true" href="#3-cryptographic-protocol-engineering-the-doq-advantage">#</a></h2>
+<p>Traditional encrypted transport protocols like DNS-over-TLS (DoT) and DNS-over-HTTPS (DoH) run atop TCP, introducing multi-step handshake latency and <strong>Head-of-Line (HoL) Blocking</strong>—where a single dropped packet stalls all subsequent queries in the queue.</p>
+<p>This architecture standardizes all upstream transit on native <strong>DNS-over-QUIC (DoQ)</strong> on Port 853, pointing directly to <strong>Control D’s Anycast infrastructure</strong>:</p>
+<ul>
+<li><strong>Symmetric 1-RTT Handshakes:</strong> Operating natively over UDP, QUIC merges TLS 1.3 cryptographic negotiation and transport initialization into a single round trip, dropping cold lookup times to ~12ms.</li>
+<li><strong>Connection Migration Resiliency:</strong> Roaming endpoints traversing through the <strong>GL.iNet Slate 7 Pro travel router</strong> maintain active DNS sessions across hotel Wi-Fi and cellular failovers without renegotiation loops.</li>
+<li><strong>Tunnel MTU Hardening:</strong> To eliminate packet drops and IP fragmentation inside the WireGuard tunnel, the interface MTU is clamped to <strong>1420 bytes</strong>, ensuring large DNS responses fit cleanly within the transport envelope.</li>
+</ul>
+<hr>
+<h2 id="4-hardware-offloading--storage-endurance">4. Hardware Offloading &amp; Storage Endurance<a hidden class="anchor" aria-hidden="true" href="#4-hardware-offloading--storage-endurance">#</a></h2>
+<p>High-frequency query logging across dozens of home IoT and media endpoints causes severe write amplification on boot storage. To protect the <strong>Pentium Gold 8505 appliance SSDs</strong>, a multi-tiered quarantine policy is enforced:</p>
+<ul>
+<li><strong>Volatile Caching:</strong> AdGuard Home query logging is restricted to a <strong>24-hour circular buffer</strong> retained purely within volatile system RAM.</li>
+<li><strong>Telemetry Decoupling:</strong> Long-term analytics are extracted via Prometheus and Loki collectors, compressed into time-series blocks, and stored on an isolated secondary storage pool.</li>
+<li><strong>Encrypted Snapshot Shipping:</strong> Transactional metric blocks are cataloged nightly by the <strong>Kopia backup engine</strong>, encrypted via client-side <strong>AES-256-GCM</strong>, and pushed to Backblaze B2 object storage.</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/networking/">Networking</a></li>
+      <li><a href="http://localhost:1313/tags/dns/">DNS</a></li>
+      <li><a href="http://localhost:1313/tags/adguard-home/">AdGuard-Home</a></li>
+      <li><a href="http://localhost:1313/tags/control-d/">Control-D</a></li>
+      <li><a href="http://localhost:1313/tags/opnsense/">OPNsense</a></li>
+      <li><a href="http://localhost:1313/tags/zero-trust/">Zero-Trust</a></li>
+      <li><a href="http://localhost:1313/tags/infrastructure/">Infrastructure</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/projects/proxmox-virtualized-storage/">
+    <span class="title">« Prev</span>
+    <span>Multi-Node Hypervisor Fabric &amp; Hardware-Accelerated Storage Cluster</span>
+  </a>
+  <a class="next" href="http://localhost:1313/projects/zero-trust-remote-access-mesh/">
+    <span class="title">Next »</span>
+    <span>Intent-Based Zero Trust: Tri-Tier Remote Access &amp; Ingress Microsegmentation</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">Brandon Extra | Security &amp; Systems Architecture</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

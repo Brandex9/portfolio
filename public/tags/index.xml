@@ -6,20 +6,62 @@
     <description>Recent content in Tags on Brandon Extra | Security &amp; Systems Architecture</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Authentik</title>
-      <link>http://localhost:1313/tags/authentik/</link>
-      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/authentik/</guid>
+      <title>AdGuard-Home</title>
+      <link>http://localhost:1313/tags/adguard-home/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/adguard-home/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Control-D</title>
+      <link>http://localhost:1313/tags/control-d/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/control-d/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DNS</title>
+      <link>http://localhost:1313/tags/dns/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/dns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Infrastructure</title>
+      <link>http://localhost:1313/tags/infrastructure/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/infrastructure/</guid>
       <description></description>
     </item>
     <item>
       <title>Networking</title>
       <link>http://localhost:1313/tags/networking/</link>
-      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/networking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OPNsense</title>
+      <link>http://localhost:1313/tags/opnsense/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/opnsense/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zero-Trust</title>
+      <link>http://localhost:1313/tags/zero-trust/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/zero-trust/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Authentik</title>
+      <link>http://localhost:1313/tags/authentik/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/authentik/</guid>
       <description></description>
     </item>
     <item>
@@ -41,13 +83,6 @@
       <link>http://localhost:1313/tags/wireguard/</link>
       <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/wireguard/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Zero-Trust</title>
-      <link>http://localhost:1313/tags/zero-trust/</link>
-      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/zero-trust/</guid>
       <description></description>
     </item>
     <item>
@@ -146,13 +181,6 @@
       <link>http://localhost:1313/tags/kopia/</link>
       <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/kopia/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OPNsense</title>
-      <link>http://localhost:1313/tags/opnsense/</link>
-      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/opnsense/</guid>
       <description></description>
     </item>
     <item>

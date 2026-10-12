@@ -83,8 +83,8 @@
   "keywords": [
     "Kopia", "Backblaze-B2", "Disaster-Recovery", "Docker", "DevOps"
   ],
-  "articleBody": "Engineering Overview High-availability homelab operations require reproducible container deployments and an automated disaster recovery pipeline adhering strictly to the 3-2-1 backup standard.\n1. Hardened Container Perimeter Standards All container deployments adhere to strict runtime isolation boundaries deployed through GitOps orchestration:\nDocker Named Secrets: Plaintext passwords inside environment variables (.env) are prohibited. Secrets are mounted as secure file objects under Unix chmod 600 permissions and injected into memory at /run/secrets/. Runtime Sandboxing: services: app: image: app:latest user: \"1000:1000\" read_only: true tmpfs: - /tmp:size=50M security_opt: - no-new-privileges:true cap_drop: - ALL secrets: - db_password secrets: db_password: file: ./secrets/db_password.txt ┌────────────────────────┐\r│ Production Hypervisors │\r└───────────┬────────────┘\r│\r┌─────────┴─────────┐\r│Daily Sync Pipeline|\r▼ ▼\r┌──────────────────┐ ┌───────────────────────────┐ │ Tier 1: Fast PBS │ │ Tier 2: Encrypted Offsite │ │ (Local ZFS SSD) │ │ (Kopia -\u003e Backblaze B2) │ └──────────────────┘ └───────────────────────────┘\n### Tier 1: Rapid Local Recovery\r- **Mechanism:** Incremental, deduplicated Proxmox VE block snapshots streamed across 10G interconnects to an isolated Proxmox Backup Server (PBS) datastore.\r- **Storage Plane:** Local enterprise ZFS SSD mirrors providing near-instantaneous recovery times for hypervisor VMs and LXCs.\r### Tier 2: Offsite Catastrophic Recovery\r- **Mechanism:** Daily automated snapshots of mission-critical datasets (`/storage/photos`, cryptographic state files, application databases, and Git configs) processed via the Kopia Engine.\r- **Database Integrity:** Stateful transactional systems execute automated plaintext dumps to a staging directory prior to Kopia snapshot execution to prevent state corruption.\r- **Client-Side Encryption:** End-to-end AES-256-GCM encryption is enforced locally before data leaves host memory.\r- **Target Bucket:** Scoped Backblaze B2 Cloud Object Storage (`extra-infra-backup-kopia-daily-us-east`).\r- **Bandwidth Optimization:** Bulk, replaceable media streams are programmatically excluded to mitigate cloud storage overhead and unexpected data egress costs. ",
-  "wordCount" : "273",
+  "articleBody": "Engineering Overview High-availability homelab operations require reproducible container deployments and an automated disaster recovery pipeline adhering strictly to the 3-2-1 backup standard.\n1. Hardened Container Perimeter Standards All container deployments adhere to strict runtime isolation boundaries deployed through GitOps orchestration:\nDocker Named Secrets: Plaintext passwords inside environment variables (.env) are prohibited. Secrets are mounted as secure file objects under Unix chmod 600 permissions and injected into memory at /run/secrets/. Runtime Sandboxing: services: app: image: app:latest user: \"1000:1000\" read_only: true tmpfs: - /tmp:size=50M security_opt: - no-new-privileges:true cap_drop: - ALL secrets: - db_password secrets: db_password: file: ./secrets/db_password.txt ┌────────────────────────┐ │ Production Hypervisors │ └───────────┬────────────┘ │ ┌─────────┴─────────┐ │Daily Sync Pipeline│ ▼ ▼ ┌──────────────────┐ ┌───────────────────────────┐ │ Tier 1: Fast PBS │ │ Tier 2: Encrypted Offsite │ │ (Local ZFS SSD) │ │ (Kopia -\u003e Backblaze B2) │ └──────────────────┘ └───────────────────────────┘ Tier 1: Rapid Local Recovery Mechanism: Incremental, deduplicated Proxmox VE block snapshots streamed across 10G interconnects to an isolated Proxmox Backup Server (PBS) datastore. Storage Plane: Local enterprise ZFS SSD mirrors providing near-instantaneous recovery times for hypervisor VMs and LXCs. Tier 2: Offsite Catastrophic Recovery Mechanism: Daily automated snapshots of mission-critical datasets (/storage/photos, cryptographic state files, application databases, and Git configs) processed via the Kopia Engine. Database Integrity: Stateful transactional systems execute automated database dumps to a staging directory prior to Kopia snapshot execution to prevent state corruption. Client-Side Encryption: End-to-end AES-256-GCM encryption is enforced locally before data leaves host memory. Target Bucket: Scoped Backblaze B2 Cloud Object Storage (extra-infra-backup-kopia-daily-us-east). Bandwidth Optimization: Bulk, replaceable media streams are programmatically excluded to mitigate cloud storage overhead and unexpected data egress costs. Future Plans Next-Phase Hardening: Transitioning from local file-based Docker secrets (chmod 600) to centralized, dynamic runtime secret injection using a self-hosted Infisical cluster in VLAN 10 brokered via Universal Auth Machine Identities.. ",
+  "wordCount" : "296",
   "inLanguage": "en",
   "datePublished": "2026-09-30T00:00:00Z",
   "dateModified": "2026-09-30T00:00:00Z",
@@ -205,32 +205,35 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">secrets</span>:
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">db_password</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">file</span>: <span style="color:#ae81ff">./secrets/db_password.txt</span>
-</span></span></code></pre></div><pre><code>    ┌────────────────────────┐
-    │ Production Hypervisors │
-    └───────────┬────────────┘
-                │
-      ┌─────────┴─────────┐
-      │Daily Sync Pipeline|
-      ▼                   ▼
-</code></pre>
-<p>┌──────────────────┐ ┌───────────────────────────┐
-│ Tier 1: Fast PBS │ │ Tier 2: Encrypted Offsite │
-│ (Local ZFS SSD) │ │ (Kopia -&gt; Backblaze B2) │
-└──────────────────┘ └───────────────────────────┘</p>
-<pre tabindex="0"><code>
-### Tier 1: Rapid Local Recovery
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>              <span style="color:#ae81ff">┌────────────────────────┐</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ae81ff">│ Production Hypervisors │</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ae81ff">└───────────┬────────────┘</span>
+</span></span><span style="display:flex;"><span>                          <span style="color:#ae81ff">│</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">┌─────────┴─────────┐</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">│Daily Sync Pipeline│</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">▼                   ▼</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">┌──────────────────┐ ┌───────────────────────────┐</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">│ Tier 1</span>: <span style="color:#f92672">Fast PBS │ │ Tier 2</span>: <span style="color:#ae81ff">Encrypted Offsite │</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">│ (Local ZFS SSD)  │ │ (Kopia -&gt; Backblaze B2)   │</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">└──────────────────┘ └───────────────────────────┘</span>
+</span></span></code></pre></div><h3 id="tier-1-rapid-local-recovery">Tier 1: Rapid Local Recovery<a hidden class="anchor" aria-hidden="true" href="#tier-1-rapid-local-recovery">#</a></h3>
+<ul>
+<li><strong>Mechanism:</strong> Incremental, deduplicated Proxmox VE block snapshots streamed across 10G interconnects to an isolated Proxmox Backup Server (PBS) datastore.</li>
+<li><strong>Storage Plane:</strong> Local enterprise ZFS SSD mirrors providing near-instantaneous recovery times for hypervisor VMs and LXCs.</li>
+</ul>
+<h3 id="tier-2-offsite-catastrophic-recovery">Tier 2: Offsite Catastrophic Recovery<a hidden class="anchor" aria-hidden="true" href="#tier-2-offsite-catastrophic-recovery">#</a></h3>
+<ul>
+<li><strong>Mechanism:</strong> Daily automated snapshots of mission-critical datasets (<code>/storage/photos</code>, cryptographic state files, application databases, and Git configs) processed via the Kopia Engine.</li>
+<li><strong>Database Integrity:</strong> Stateful transactional systems execute automated database dumps to a staging directory prior to Kopia snapshot execution to prevent state corruption.</li>
+<li><strong>Client-Side Encryption:</strong> End-to-end AES-256-GCM encryption is enforced locally before data leaves host memory.</li>
+<li><strong>Target Bucket:</strong> Scoped Backblaze B2 Cloud Object Storage (<code>extra-infra-backup-kopia-daily-us-east</code>).</li>
+<li><strong>Bandwidth Optimization:</strong> Bulk, replaceable media streams are programmatically excluded to mitigate cloud storage overhead and unexpected data egress costs.</li>
+</ul>
+<h3 id="future-plans">Future Plans<a hidden class="anchor" aria-hidden="true" href="#future-plans">#</a></h3>
+<ul>
+<li><strong>Next-Phase Hardening:</strong> Transitioning from local file-based Docker secrets (<code>chmod 600</code>) to centralized, dynamic runtime secret injection using a self-hosted Infisical cluster in <strong>VLAN 10</strong> brokered via Universal Auth Machine Identities..</li>
+</ul>
 
-- **Mechanism:** Incremental, deduplicated Proxmox VE block snapshots streamed across 10G interconnects to an isolated Proxmox Backup Server (PBS) datastore.
-- **Storage Plane:** Local enterprise ZFS SSD mirrors providing near-instantaneous recovery times for hypervisor VMs and LXCs.
-
-### Tier 2: Offsite Catastrophic Recovery
-
-- **Mechanism:** Daily automated snapshots of mission-critical datasets (`/storage/photos`, cryptographic state files, application databases, and Git configs) processed via the Kopia Engine.
-- **Database Integrity:** Stateful transactional systems execute automated plaintext dumps to a staging directory prior to Kopia snapshot execution to prevent state corruption.
-- **Client-Side Encryption:** End-to-end AES-256-GCM encryption is enforced locally before data leaves host memory.
-- **Target Bucket:** Scoped Backblaze B2 Cloud Object Storage (`extra-infra-backup-kopia-daily-us-east`).
-- **Bandwidth Optimization:** Bulk, replaceable media streams are programmatically excluded to mitigate cloud storage overhead and unexpected data egress costs.
-</code></pre>
 
   </div>
 
@@ -243,13 +246,9 @@
       <li><a href="http://localhost:1313/tags/devops/">DevOps</a></li>
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://localhost:1313/projects/zero-trust-remote-access-mesh/">
+  <a class="prev" href="http://localhost:1313/projects/soc-telemetry-packet-analysis/">
     <span class="title">« Prev</span>
-    <span>Intent-Based Zero Trust: Tri-Tier Remote Access &amp; Ingress Microsegmentation</span>
-  </a>
-  <a class="next" href="http://localhost:1313/projects/hybrid-cloud-edge-defense/">
-    <span class="title">Next »</span>
-    <span>Hybrid Cloud Perimeter: VPS Reverse-Proxy Shield &amp; Zero-Trust ZTNA</span>
+    <span>NOC/SOC Defense: Packet Analysis, Threat Bouncing, and SIEM Telemetry</span>
   </a>
 </nav>
 

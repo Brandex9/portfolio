@@ -6,7 +6,7 @@
     <description>Recent content in Zero-Trust on Brandon Extra | Security &amp; Systems Architecture</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/zero-trust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Production Multi-VLAN Network Segmentation &amp; Threat Isolation</title>
@@ -16,11 +16,18 @@
       <description>Design and deployment of an enterprise 6-VLAN network topology utilizing virtualized OPNsense, Zenarmor DPI, and default-deny inter-VLAN filtering.</description>
     </item>
     <item>
+      <title>Decoupled DNS Architecture: Sub-Millisecond DoQ Privacy Plane</title>
+      <link>http://localhost:1313/projects/decoupled-dns-architecture/</link>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/decoupled-dns-architecture/</guid>
+      <description>Architecting a high-performance DNS-over-QUIC (DoQ) pipeline that strips residential IP footprints and eliminates recursive multi-binary context overhead.</description>
+    </item>
+    <item>
       <title>Intent-Based Zero Trust: Tri-Tier Remote Access &amp; Ingress Microsegmentation</title>
       <link>http://localhost:1313/projects/zero-trust-remote-access-mesh/</link>
       <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/projects/zero-trust-remote-access-mesh/</guid>
-      <description>Partitioning enterprise remote access into specialized operational scopes using Pangolin IP-gating, Twingate least-privilege ZTNA, and a Tailscale travel mesh.</description>
+      <description>Partitioning enterprise remote access into specialized operational scopes using Caddy edge routing, Authentik centralized IAM, Twingate least-privilege ZTNA, and a Tailscale travel mesh.</description>
     </item>
     <item>
       <title>Hybrid Cloud Perimeter: VPS Reverse-Proxy Shield &amp; Zero-Trust ZTNA</title>

@@ -8,11 +8,11 @@
     <loc>http://localhost:1313/projects/proxmox-virtualized-storage/</loc>
     <lastmod>2026-09-30T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/projects/decoupled-dns-architecture/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/projects/zero-trust-remote-access-mesh/</loc>
     <lastmod>2026-10-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/projects/tier2-disaster-recovery/</loc>
-    <lastmod>2026-09-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/projects/hybrid-cloud-edge-defense/</loc>
     <lastmod>2026-09-30T00:00:00+00:00</lastmod>
@@ -20,19 +20,40 @@
     <loc>http://localhost:1313/projects/soc-telemetry-packet-analysis/</loc>
     <lastmod>2026-09-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/authentik/</loc>
-    <lastmod>2026-10-03T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/projects/tier2-disaster-recovery/</loc>
+    <lastmod>2026-09-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/adguard-home/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2026-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/control-d/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/dns/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/projects/</loc>
-    <lastmod>2026-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/infrastructure/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/networking/</loc>
-    <lastmod>2026-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/opnsense/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/zero-trust/</loc>
+    <lastmod>2026-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/authentik/</loc>
     <lastmod>2026-10-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/tailscale/</loc>
@@ -42,9 +63,6 @@
     <lastmod>2026-10-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/wireguard/</loc>
-    <lastmod>2026-10-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/zero-trust/</loc>
     <lastmod>2026-10-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/ztna/</loc>
@@ -90,9 +108,6 @@
     <lastmod>2026-09-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/kopia/</loc>
-    <lastmod>2026-09-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/opnsense/</loc>
     <lastmod>2026-09-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/pcie-passthrough/</loc>

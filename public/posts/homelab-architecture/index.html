@@ -83,7 +83,7 @@
   "keywords": [
     "Networking", "OPNsense", "Proxmox", "VLANs", "Zero-Trust"
   ],
-  "articleBody": "Architectural Overview Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel i3-N300 OPNsense core router and a TP-Link Omada 2.5G managed switch.\nKey Implementation Highlights 6-VLAN Microsegmentation: Strict inter-VLAN default-deny boundary isolation across Trusted LAN, Out-of-Band Management (OOB_MGMT), Application Core, DMZ Media, IoT Smart, and an isolated Security Staging sandbox. Compute \u0026 Storage Fabric: Bare-metal Proxmox VE hypervisors hosting virtualized Unraid storage (direct PCIe pass-through of LSI SAS 9211-8i in IT Mode) alongside containerized workloads. GitOps Application Orchestration: Zero plaintext credential storage using Docker Named Secrets (/run/secrets/) and Wolfi-hardened container runtimes. Disaster Recovery Strategy: Multi-tier DR pipeline combining local block-level Proxmox Backup Server (PBS) SSD mirrors with client-side encrypted, deduplicated Kopia snapshots shipped to Backblaze B2. ",
+  "articleBody": "Architectural Overview Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel 8505 OPNsense core router and a TP-Link Omada 2.5G managed switch.\nKey Implementation Highlights 6-VLAN Microsegmentation: Strict inter-VLAN default-deny boundary isolation across Trusted LAN, Out-of-Band Management (OOB_MGMT), Application Core, DMZ Media, IoT Smart, and an isolated Security Staging sandbox. Compute \u0026 Storage Fabric: Bare-metal Proxmox VE hypervisors hosting virtualized Unraid storage (direct PCIe pass-through of LSI SAS 9211-8i in IT Mode) alongside containerized workloads. GitOps Application Orchestration: Zero plaintext credential storage using Docker Named Secrets (/run/secrets/) and Wolfi-hardened container runtimes. Disaster Recovery Strategy: Multi-tier DR pipeline combining local block-level Proxmox Backup Server (PBS) SSD mirrors with client-side encrypted, deduplicated Kopia snapshots shipped to Backblaze B2. ",
   "wordCount" : "125",
   "inLanguage": "en",
   "datePublished": "2026-09-30T00:00:00Z",
@@ -180,7 +180,7 @@
 </div>
   </header> 
   <div class="post-content md-content"><h2 id="architectural-overview">Architectural Overview<a hidden class="anchor" aria-hidden="true" href="#architectural-overview">#</a></h2>
-<p>Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel i3-N300 OPNsense core router and a TP-Link Omada 2.5G managed switch.</p>
+<p>Transitioned from a flat consumer network topology to an enterprise-grade private IP addressing fabric anchored by an Intel 8505 OPNsense core router and a TP-Link Omada 2.5G managed switch.</p>
 <h3 id="key-implementation-highlights">Key Implementation Highlights<a hidden class="anchor" aria-hidden="true" href="#key-implementation-highlights">#</a></h3>
 <ul>
 <li><strong>6-VLAN Microsegmentation:</strong> Strict inter-VLAN default-deny boundary isolation across Trusted LAN, Out-of-Band Management (OOB_MGMT), Application Core, DMZ Media, IoT Smart, and an isolated Security Staging sandbox.</li>
